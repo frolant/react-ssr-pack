@@ -1,0 +1,25 @@
+{
+  "npmClient": "npm",
+  "independent": true,
+  "command": {
+    "bootstrap": {
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
+    },
+    "publish": {
+      "registry": "https://registry.npmjs.org"
+    },
+    "version": {
+      "allowBranch": "master"
+    }
+  },
+  "ignoreChanges": [
+    "**/*.test.js",
+    "**/*.md"
+  ],
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent"
+}

@@ -1,0 +1,21 @@
+{
+    "name": "@react-ssr-pack/resolve-plugin",
+    "version": "1.0.6",
+    "description": "Webpack resolve plugin for resolving react-proxy in React SSR application based on React v18 and @react-ssr-pack",
+    "main": "./lib/index.js",
+    "author": "Anton Frolov",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:frolant/react-ssr-pack.git"
+    },
+    "scripts": {
+        "build": "node ../../tools/scripts/update-library-from-source resolve-plugin",
+        "watch:to:lib": "echo Watch mode not supported && exit 1",
+        "watch:to:app": "echo Watch mode not supported && exit 1",
+        "watch:to:app:types": "echo Watch mode not supported && exit 1"
+    },
+    "dependencies": {
+        "@react-ssr-pack/react-proxy": "1.0.2"
+    }
+}

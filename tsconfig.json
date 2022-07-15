@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "moduleResolution": "node",
+        "target": "es6",
+        "declaration": true,
+        "sourceMap": true,
+        "lib": [
+            "DOM",
+            "DOM.Iterable",
+            "ESNext"
+        ],
+        "skipLibCheck": true,
+        "strict": true,
+        "strictNullChecks": false,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "preserveConstEnums": true,
+        "allowSyntheticDefaultImports": true,
+        "jsx": "preserve",
+        "forceConsistentCasingInFileNames": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "resolveJsonModule": true,
+        "incremental": true
+    },
+    "include": [
+        "packages/**/src"
+    ]
+}

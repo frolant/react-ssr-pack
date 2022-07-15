@@ -1,0 +1,1 @@
+export { initializePrometheusClient } from './initializePrometheusClient';

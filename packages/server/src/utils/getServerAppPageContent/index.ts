@@ -1,0 +1,1 @@
+export { getServerAppPageContent } from './getServerAppPageContent';

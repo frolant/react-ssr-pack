@@ -1,0 +1,28 @@
+{
+    "name": "@react-ssr-pack/tools",
+    "version": "1.0.2",
+    "description": "Common tools for React SSR application based on React v18 and @react-ssr-pack",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "author": "Anton Frolov",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:frolant/react-ssr-pack.git"
+    },
+    "browserslist": [
+        "last 2 versions"
+    ],
+    "scripts": {
+        "build": "node ../../run build tools",
+        "watch:to:lib": "node ../../run watch-to-lib tools",
+        "watch:to:app": "node ../../run watch-to-app tools",
+        "watch:to:app:types": "node ../../run watch-to-app-types tools"
+    },
+    "devDependencies": {
+        "@types/react-dom": "17.0.2"
+    },
+    "peerDependencies": {
+        "react-dom": "^17.0.2"
+    }
+}

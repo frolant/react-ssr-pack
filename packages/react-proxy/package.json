@@ -1,0 +1,28 @@
+{
+    "name": "@react-ssr-pack/react-proxy",
+    "version": "1.0.2",
+    "description": "Library for proxying React and redefine some of his functions on SSR application based on React v18 and @react-ssr-pack",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "author": "Anton Frolov",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:frolant/react-ssr-pack.git"
+    },
+    "browserslist": [
+        "last 2 versions"
+    ],
+    "scripts": {
+        "build": "node ../../run build react-proxy",
+        "watch:to:lib": "node ../../run watch-to-lib react-proxy",
+        "watch:to:app": "node ../../run watch-to-app react-proxy",
+        "watch:to:app:types": "node ../../run watch-to-app-types react-proxy"
+    },
+    "dependencies": {
+        "@react-ssr-pack/tools": "1.0.2"
+    },
+    "peerDependencies": {
+        "react": "^18.0.0"
+    }
+}

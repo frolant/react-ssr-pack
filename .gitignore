@@ -1,0 +1,25 @@
+# IDE files
+.idea/*
+.tm_properties
+
+# Dependencies
+lib
+node_modules
+/dist
+/packages/*/node_modules
+/packages/*/lib
+
+# Misc
+.DS_Store
+.env.local
+npm-debug.log*
+lerna-debug.log
+package.json.lerna_backup
+.vscode
+.prettierignore
+.prettierrc.js
+jsconfig.json
+tsconfig.tsbuildinfo
+
+# Local config
+/local.config.json

@@ -1,0 +1,9 @@
+{
+    "webpack": "./node_modules/.bin/webpack",
+    "appRepositoryRelativePath": "../project-path",
+    "updateTypesOnceOnWatchingToApp": true,
+    "watchingToApp": false,
+    "watchingPackagesNames": [
+        "server"
+    ]
+}
