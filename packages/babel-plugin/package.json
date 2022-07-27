@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/babel-plugin",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Babel-plugin for processing React SSR application based on React v18 and @react-ssr-pack",
     "main": "./lib/index.js",
     "author": "Anton Frolov",
