@@ -10,6 +10,9 @@
         "type": "git",
         "url": "git@github.com:frolant/react-ssr-pack.git"
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "browserslist": [
         "last 2 versions"
     ],

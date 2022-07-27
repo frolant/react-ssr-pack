@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/babel-plugin",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Babel-plugin for processing React SSR application based on React v18 and @react-ssr-pack",
     "main": "./lib/index.js",
     "author": "Anton Frolov",
@@ -9,6 +9,9 @@
         "type": "git",
         "url": "git@github.com:frolant/react-ssr-pack.git"
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "build": "node ../../tools/scripts/update-library-from-source  babel-plugin",
         "watch:to:lib": "echo Watch mode not supported && exit 1",
@@ -16,9 +19,9 @@
         "watch:to:app:types": "echo Watch mode not supported && exit 1"
     },
     "dependencies": {
-        "md5": "2.3.0"
+        "md5": "^2.3.0"
     },
     "devDependencies": {
-        "@types/md5": "2.3.2"
+        "@types/md5": "^2.3.2"
     }
 }

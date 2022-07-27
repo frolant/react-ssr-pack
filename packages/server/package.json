@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/server",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Server for listening a React SSR application based on React v18 and @react-ssr-pack",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
@@ -9,6 +9,9 @@
     "repository": {
         "type": "git",
         "url": "git@github.com:frolant/react-ssr-pack.git"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "browserslist": [
         "last 2 versions"
@@ -20,12 +23,12 @@
         "watch:to:app:types": "node ../../run watch-to-app-types server isNodeTarget"
     },
     "dependencies": {
-        "express": "4.17.2",
-        "prom-client": "14.0.1",
-        "redux": "4.0.5"
+        "express": "^4.17.2",
+        "prom-client": "^14.0.1",
+        "redux": "^4.2.0"
     },
     "devDependencies": {
-        "@types/express": "4.17.13"
+        "@types/express": "^4.17.13"
     },
     "peerDependencies": {
         "react": "^18.0.0"

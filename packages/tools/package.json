@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/tools",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Common tools for React SSR application based on React v18 and @react-ssr-pack",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
@@ -9,6 +9,9 @@
     "repository": {
         "type": "git",
         "url": "git@github.com:frolant/react-ssr-pack.git"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "browserslist": [
         "last 2 versions"
@@ -20,9 +23,9 @@
         "watch:to:app:types": "node ../../run watch-to-app-types tools"
     },
     "devDependencies": {
-        "@types/react-dom": "17.0.2"
+        "@types/react-dom": "^18.0.6"
     },
     "peerDependencies": {
-        "react-dom": "^17.0.2"
+        "react-dom": "^18.0.0"
     }
 }
