@@ -16,9 +16,9 @@
         "watch:to:app:types": "echo Watch mode not supported && exit 1"
     },
     "dependencies": {
-        "md5": "2.3.0"
+        "md5": "^2.3.0"
     },
     "devDependencies": {
-        "@types/md5": "2.3.2"
+        "@types/md5": "^2.3.2"
     }
 }
