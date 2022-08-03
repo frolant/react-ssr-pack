@@ -16,6 +16,7 @@ interface IRenderServerAppResult {
     maxIterationsCount: number;
     executedIterationsCount: number;
     effectsFilePaths: string[];
+    responseCode?: number;
     headData: any;
     content: string;
 }

@@ -39,15 +39,21 @@ const runAppServer: TRunAppServer = ({ serverAppRender, appConfig, port, logLeve
     }));
 
     app.get('/*', async (request, response) => {
-        return response.send(await getServerAppPageContent({
+        const { responseCode, content } = await getServerAppPageContent({
             logLevel,
             serverAppRender,
             appConfig,
             request
-        }));
+        });
+
+        return response.status(responseCode).send(content);
     });
 
-    app.listen(port, () => logExecution(logLevel, startTime, startServerListeningMessage));
+    app.listen(port, () => logExecution({
+        logLevel,
+        startTime,
+        message: startServerListeningMessage
+    }));
 };
 
 export default runAppServer;

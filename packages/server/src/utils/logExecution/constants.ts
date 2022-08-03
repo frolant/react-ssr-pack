@@ -26,9 +26,15 @@ const messageStyle = {
 };
 
 export const executionMessageParts = {
-    title: `${messageStyle.bold}ssr${messageStyle.drop}`,
-    error: `${messageStyle.bold}${messageStyle.red}runtime error${messageStyle.drop}`,
-    success: `${messageStyle.green}${messageStyle.bold}successfully${messageStyle.drop}`
+    title: 'ssr',
+    error: (postfix: string) => `error${postfix}`,
+    success: 'successfully'
+};
+
+export const coloredExecutionMessageParts = {
+    title: `${messageStyle.bold}${executionMessageParts.title}${messageStyle.drop}`,
+    error: (postfix: string) => `${messageStyle.bold}${messageStyle.red}${executionMessageParts.error(postfix)}${messageStyle.drop}`,
+    success: `${messageStyle.green}${messageStyle.bold}${executionMessageParts.success}${messageStyle.drop}`
 };
 
 export const traceMessageParts = {
