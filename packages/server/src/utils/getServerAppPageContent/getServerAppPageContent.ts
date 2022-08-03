@@ -12,7 +12,12 @@ interface IGetServerAppPageContentOptions {
     request: any;
 }
 
-type TGetServerAppPageContent = (options: IGetServerAppPageContentOptions) => Promise<string>;
+type TGetServerAppPageContent = (options: IGetServerAppPageContentOptions) => Promise<{
+    responseCode: number;
+    content: string;
+}>;
+
+const defaultResponseCode = 200;
 
 export const getServerAppPageContent: TGetServerAppPageContent = async ({
     serverAppRender,
@@ -26,28 +31,57 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
 }) => {
     const compilationStartTime = new Date().getTime();
     const { originalUrl } = request;
-    let result;
+
+    let responseCodeResult;
+    let contentResult;
+
+    const defaultLogData = {
+        logLevel,
+        startTime: compilationStartTime,
+        message: `compilation on "${originalUrl}" return`
+    };
 
     try {
-        const { maxIterationsCount, executedIterationsCount, effectsFilePaths, headData, content } = await serverAppRender({
+        const {
+            maxIterationsCount,
+            executedIterationsCount,
+            effectsFilePaths,
+            responseCode = defaultResponseCode,
+            headData,
+            content
+        } = await serverAppRender({
             url: originalUrl,
             reducers,
             sagas,
             app
         });
 
-        result = getServerAppHTML(headData, content);
+        const isSuccessResponseCode = responseCode === defaultResponseCode;
+        contentResult = isSuccessResponseCode ? getServerAppHTML(headData, content) : htmlTemplate;
+        responseCodeResult = responseCode;
 
-        logExecution(logLevel, compilationStartTime, `compiled on "${originalUrl}"`);
+        logExecution({
+            ...defaultLogData,
+            message: isSuccessResponseCode ? `compiled on "${originalUrl}"` : defaultLogData.message,
+            ...(!isSuccessResponseCode && {
+                errorCode: responseCode
+            })
+        });
 
         if (logLevel === logLevels.trace) {
             logTrace(executedIterationsCount, maxIterationsCount, effectsFilePaths);
         }
-    } catch (error) {
-        result = htmlTemplate;
+    } catch (errorData) {
+        contentResult = htmlTemplate;
 
-        logExecution(logLevel, compilationStartTime, `compilation on "${originalUrl}" return`, error);
+        logExecution({
+            ...defaultLogData,
+            errorData
+        });
     }
 
-    return result;
+    return {
+        responseCode: responseCodeResult,
+        content: contentResult
+    };
 };

@@ -1,36 +1,50 @@
 import { logMessage, logError } from './handlers';
-import { logLevels, executionMessageParts, startServerListeningMessage } from './constants';
+import { logLevels, executionMessageParts, coloredExecutionMessageParts, startServerListeningMessage } from './constants';
 
 import type { TLogLevels } from './constants';
 
-type TGetIsNeedLogging = (logLevel: TLogLevels, message: string, error: string) => boolean;
-type TGetLogMessage = (logLevel: TLogLevels, startTime: number, message: string, error: string) => string;
-type TLogExecution = (logLevel: TLogLevels, startTime: number, message: string, error?: string) => void;
+interface ITLogExecutionOptions {
+    logLevel: TLogLevels;
+    startTime: number;
+    message: string;
+    errorData?: string;
+    errorCode?: number;
+}
+
+type TGetIsNeedLogging = (logLevel: TLogLevels, message: string, errorData: string) => boolean;
+type TGetLogMessage = (logLevel: TLogLevels, startTime: number, message: string, errorData: string, errorCode: number) => string;
+type TLogExecution = (options: ITLogExecutionOptions) => void;
 
 const defaultLogLevel = logLevels.critical;
 
-export const getIsNeedLogging: TGetIsNeedLogging = (logLevel, message, error) => {
-    return !!error || logLevel !== logLevels.critical || message === startServerListeningMessage;
+export const getIsNeedLogging: TGetIsNeedLogging = (logLevel, message, errorData) => {
+    return !!errorData || logLevel !== logLevels.critical || message === startServerListeningMessage;
 };
 
-export const getLogMessage: TGetLogMessage = (logLevel, startTime, message, error) => {
+export const getLogMessage: TGetLogMessage = (logLevel, startTime, message, errorData, errorCode) => {
     const time = new Date();
-    const status = error ? executionMessageParts.error : executionMessageParts.success;
-    const executionTime = time.getTime() - startTime;
-    const messagePrefix = logLevel === logLevels.debug ? `${time} ` : '';
 
-    return `${messagePrefix}${executionMessageParts.title} ${message} ${status} in ${executionTime} ms`;
+    const isNeedColoredMessage = logLevel === logLevels.development || logLevel === logLevels.trace;
+    const messageParts = isNeedColoredMessage ? coloredExecutionMessageParts : executionMessageParts;
+
+    const messagePrefix = logLevel === logLevels.debug ? `${time} ` : '';
+    const codeInfo = errorCode ? ` code ${errorCode}` : '';
+    const status = errorData || errorCode ? messageParts.error(codeInfo) : messageParts.success;
+    const executionTime = time.getTime() - startTime;
+
+    return `${messagePrefix}${messageParts.title} ${message} ${status} in ${executionTime} ms`;
 };
 
-export const logExecution: TLogExecution = (logLevel = defaultLogLevel, startTime, message = '', error = null) => {
-    const isNeedLogging = getIsNeedLogging(logLevel, message, error);
+export const logExecution: TLogExecution = (options) => {
+    const { logLevel = defaultLogLevel, startTime, message = '', errorData = null, errorCode = null } = options;
+    const isNeedLogging = getIsNeedLogging(logLevel, message, errorData);
 
     if (isNeedLogging) {
-        const messageText = getLogMessage(logLevel, startTime, message, error);
+        const messageText = getLogMessage(logLevel, startTime, message, errorData, errorCode);
         logMessage(messageText);
 
-        if (error) {
-            logError(error);
+        if (errorData) {
+            logError(errorData);
         }
     }
 };

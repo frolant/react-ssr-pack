@@ -18,10 +18,9 @@
         "watch:to:lib": "lerna run watch:to:lib --parallel",
         "watch:to:app": "lerna run watch:to:app --parallel",
         "watch:to:app:types": "lerna run watch:to:app:types --parallel",
-        "publish": "lerna publish",
-        "publish:npm": "lerna run publish --parallel",
-        "publish:git": "lerna publish from-git",
-        "publish:pkg": "lerna publish from-package",
+        "publish": "npm run init && npm run build && npm run eslint && lerna publish",
+        "publish:git": "npm run init && npm run build && npm run eslint && lerna publish from-git",
+        "publish:pkg": "npm run init && npm run build && npm run eslint && lerna publish from-package",
         "generate:package": "node ./tools/scripts/generate-package.js package-name",
         "eslint": "eslint ./packages --max-warnings 0",
         "lerna": "lerna"
