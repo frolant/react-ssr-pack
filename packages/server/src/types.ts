@@ -8,7 +8,7 @@ type TRenderServerAppOptions<OptionsExtension = Record<string, unknown>> = TRend
     url: string;
 };
 
-interface IRenderServerAppResult {
+export interface IRenderServerAppResult {
     maxIterationsCount: number;
     executedIterationsCount: number;
     effectsFilePaths: string[];

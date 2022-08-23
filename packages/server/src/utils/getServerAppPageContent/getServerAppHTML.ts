@@ -2,8 +2,6 @@ import { resolve } from 'path';
 import fs from 'fs';
 
 type TGetServerAppHTML = (head: string, content: string) => string;
-type TGetProcessedHTMLTemplate = (head: string, content: string) => string;
-type TGetProcessedContent = (content: string) => string;
 
 const templatePath = resolve(__dirname, './template.html');
 const titleRegexp = /<title>.*<\/title>/;
@@ -25,15 +23,6 @@ const template = {
     bottom: templateProcessedContentParts[1]
 };
 
-const getProcessedHTMLTemplate: TGetProcessedHTMLTemplate = (head, content) => {
-    return `${template.top}${head}${template.center}${container.start}${content}${container.end}${template.bottom}`;
-};
-
-const getProcessedContent: TGetProcessedContent = (content = '') => {
-    return content.replace(/<!-- -->/g, '');
-};
-
 export const getServerAppHTML: TGetServerAppHTML = (head = '', content = '') => {
-    const processedContent = getProcessedContent(content);
-    return getProcessedHTMLTemplate(head, processedContent);
+    return `${template.top}${head}${template.center}${container.start}${content}${container.end}${template.bottom}`;
 };

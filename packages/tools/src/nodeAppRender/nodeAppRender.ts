@@ -5,12 +5,14 @@ import { getAddedEffectsDataItemsCount, setEffectsDataItemsStatusesToProcessed, 
 
 import { getStringFromPipeableStream } from './utils';
 
-type TNodeAppRenderResult = Promise<{
+export interface INodeAppRenderResultData {
     maxIterationsCount: number;
     executedIterationsCount: number;
     effectsFilePaths: string[];
     content: string;
-}>;
+}
+
+type TNodeAppRenderResult = Promise<INodeAppRenderResultData>;
 
 type TNodeAppRender = (application: () => any, onRendered: () => void, maxIterationsCount?: number) => TNodeAppRenderResult;
 
