@@ -1,44 +1,45 @@
-import express from 'express';
+import express, { Express } from 'express';
 import { resolve } from 'path';
 
-import { initializePrometheusClient } from './utils/initializePrometheusClient';
 import { getServerAppPageContent } from './utils/getServerAppPageContent';
 
-import { logExecution, startServerListeningMessage } from './utils/logExecution';
+import { logExecution, startServerListeningMessage } from './utils/logger';
 
-import type { TLogLevels } from './utils/logExecution';
-import type { TServerAppRender, IRenderAppConfig } from './types';
+import type { TLogLevels } from './utils/logger';
+import type { TServerAppRender, TRenderAppConfig } from './types';
 
-interface TRunAppServerOptions {
-    serverAppRender: TServerAppRender;
-    appConfig: IRenderAppConfig;
-    useMetrics: boolean;
+export interface IRunAppServerOptions {
+    serverAppRender: TServerAppRender<Record<string, unknown>>;
+    appConfig: TRenderAppConfig;
     logLevel: TLogLevels;
     port: number;
+    onServerInitialization?: (server: Express) => void;
 }
 
-type TRunAppServer = (options: TRunAppServerOptions) => void;
+type TRunAppServer = (options: IRunAppServerOptions) => void;
 
 const staticRelativePath = '../client';
 
-const runAppServer: TRunAppServer = ({ serverAppRender, appConfig, port, logLevel, useMetrics }): void => {
+const runAppServer: TRunAppServer = ({
+    serverAppRender,
+    appConfig,
+    port,
+    logLevel,
+    onServerInitialization
+}): void => {
     const startTime = new Date().getTime();
     const staticPath = resolve(__dirname, staticRelativePath);
-    const app = express();
+    const server = express();
 
-    if (useMetrics) {
-        const prometheusClient = initializePrometheusClient();
-
-        app.get('/metrics', async (_request, response) => {
-            return response.send(await prometheusClient.metrics());
-        });
+    if (onServerInitialization) {
+        onServerInitialization(server);
     }
 
-    app.use(express.static(staticPath, {
+    server.use(express.static(staticPath, {
         index: false
     }));
 
-    app.get('/*', async (request, response) => {
+    server.get('/*', async (request, response) => {
         const { responseCode, content } = await getServerAppPageContent({
             logLevel,
             serverAppRender,
@@ -49,10 +50,10 @@ const runAppServer: TRunAppServer = ({ serverAppRender, appConfig, port, logLeve
         return response.status(responseCode).send(content);
     });
 
-    app.listen(port, () => logExecution({
-        logLevel,
+    server.listen(port, () => logExecution({
+        message: startServerListeningMessage,
         startTime,
-        message: startServerListeningMessage
+        logLevel
     }));
 };
 

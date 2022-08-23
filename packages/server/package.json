@@ -23,9 +23,7 @@
         "watch:to:app:types": "node ../../run watch-to-app-types server isNodeTarget"
     },
     "dependencies": {
-        "express": "^4.17.2",
-        "prom-client": "^14.0.1",
-        "redux": "^4.2.0"
+        "express": "^4.17.2"
     },
     "devDependencies": {
         "@types/express": "^4.17.13"

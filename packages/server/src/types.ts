@@ -1,26 +1,26 @@
 import type { FC } from 'react';
-import type { ReducersMapObject } from 'redux';
 
-export interface IRenderAppConfig {
+export type TRenderAppConfig<OptionsExtension = Record<string, unknown>> = OptionsExtension & {
     app: FC;
-    reducers: ReducersMapObject<any, any>;
-    sagas: Array<() => Generator>;
-    analyticsEvents?: any;
-}
+};
 
-interface IRenderServerAppOptions extends IRenderAppConfig {
+type TRenderServerAppOptions<OptionsExtension = Record<string, unknown>> = TRenderAppConfig<OptionsExtension> & {
     url: string;
-}
+};
 
 interface IRenderServerAppResult {
     maxIterationsCount: number;
     executedIterationsCount: number;
     effectsFilePaths: string[];
     responseCode?: number;
-    headData: any;
     content: string;
+    head: string;
 }
 
-export type TServerAppRender = (options: IRenderServerAppOptions) => Promise<IRenderServerAppResult>;
+export type TServerAppRender<OptionsExtension = Record<string, unknown>> = (
+    options: TRenderServerAppOptions<OptionsExtension>
+) => Promise<IRenderServerAppResult>;
 
-export type TClientAppRender = (options: IRenderAppConfig) => void;
+export type TClientAppRender<OptionsExtension = Record<string, unknown>> = (
+    options: TRenderAppConfig<OptionsExtension>
+) => void;

@@ -1,13 +1,13 @@
-import { logExecution, logLevels, logTrace } from '../logExecution';
+import { logExecution, logLevels, logTrace } from '../logger';
 
 import { getServerAppHTML, htmlTemplate } from './getServerAppHTML';
 
-import type { TLogLevels } from '../logExecution';
-import type { IRenderAppConfig, TServerAppRender } from '../../types';
+import type { TLogLevels } from '../logger';
+import type { TRenderAppConfig, TServerAppRender } from '../../types';
 
 interface IGetServerAppPageContentOptions {
-    serverAppRender: TServerAppRender;
-    appConfig: IRenderAppConfig;
+    serverAppRender: TServerAppRender<Record<string, unknown>>;
+    appConfig: TRenderAppConfig;
     logLevel: TLogLevels;
     request: any;
 }
@@ -22,9 +22,8 @@ const defaultResponseCode = 200;
 export const getServerAppPageContent: TGetServerAppPageContent = async ({
     serverAppRender,
     appConfig: {
-        reducers,
-        sagas,
-        app
+        app,
+        ...restAppConfig
     },
     logLevel,
     request
@@ -47,17 +46,16 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
             executedIterationsCount,
             effectsFilePaths,
             responseCode = defaultResponseCode,
-            headData,
-            content
+            content,
+            head
         } = await serverAppRender({
+            app,
             url: originalUrl,
-            reducers,
-            sagas,
-            app
+            ...restAppConfig
         });
 
         const isSuccessResponseCode = responseCode === defaultResponseCode;
-        contentResult = isSuccessResponseCode ? getServerAppHTML(headData, content) : htmlTemplate;
+        contentResult = isSuccessResponseCode ? getServerAppHTML(head, content) : htmlTemplate;
         responseCodeResult = responseCode;
 
         logExecution({
