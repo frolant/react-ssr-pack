@@ -1,10 +1,14 @@
-import { checkEffectIdExistence, addEffectsDataItem } from '../effectsDataService';
+import { addEffectsDataItem, getEffectsDataItem } from '../services/effectsDataService';
 
-export const nodeUseEffect = (callback: () => any, effectId: string, effectFilePath: string): void => {
-    const isNotExecutedBefore = !checkEffectIdExistence(effectId);
+import type { TDependencies } from '../services/effectsDataService';
 
-    if (isNotExecutedBefore) {
-        addEffectsDataItem(effectId, effectFilePath);
+export const nodeUseEffect = (callback: () => any, dependencies: TDependencies, effectId: string, effectFilePath: string): void => {
+    const existingEffectData = getEffectsDataItem(effectId);
+
+    if (!existingEffectData) {
+        addEffectsDataItem(effectId, effectFilePath, dependencies);
+        callback();
+    } else if (existingEffectData.isDependenciesChanged(dependencies)) {
         callback();
     }
 };

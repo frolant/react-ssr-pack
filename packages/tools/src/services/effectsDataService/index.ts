@@ -1,8 +1,8 @@
+export type { IEffectsDataItem, TDependencies } from './utils';
+
 export {
-    checkEffectIdExistence,
+    getEffectsDataItem,
     addEffectsDataItem,
-    getAddedEffectsDataItemsCount,
-    setEffectsDataItemsStatusesToProcessed,
     getEffectsFilePathsData,
     resetEffectsData
 } from './effectsDataService';
