@@ -4,5 +4,7 @@ export {
     getEffectsDataItem,
     addEffectsDataItem,
     getEffectsFilePathsData,
+    getExecutedEffectsDataItemsCount,
+    setEffectsDataItemsStatusesToProcessed,
     resetEffectsData
 } from './effectsDataService';

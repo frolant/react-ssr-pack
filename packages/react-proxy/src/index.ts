@@ -1,9 +1,6 @@
-// @ts-nocheck    <-- Remove after update React-types to v18
 import React from 'react';
 
 import { nodeUseEffect } from '@react-ssr-pack/tools';
-
-type TUseEffect = (callback: () => void) => void;
 
 export const {
     Children,
@@ -23,7 +20,6 @@ export const {
     lazy,
     memo,
     startTransition,
-    unstable_act,
     useCallback,
     useContext,
     useDebugValue,
@@ -40,8 +36,8 @@ export const {
     version
 } = React;
 
-export const useEffect: TUseEffect = (callback, ...args) => nodeUseEffect(callback, ...args.slice(-2));
+export const useEffect = nodeUseEffect;
 
-export const useLayoutEffect: TUseEffect = () => {};
+export const useLayoutEffect = (): void => {};
 
 export default React;

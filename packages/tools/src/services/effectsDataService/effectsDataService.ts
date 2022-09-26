@@ -1,4 +1,4 @@
-import { createEffectsData, createEffectsDataItem } from './utils';
+import { createEffectsData, createEffectsDataItem, EffectStatus } from './utils';
 
 import type { TEffectsDataItems, IEffectsDataItem, TDependencies } from './utils';
 
@@ -21,4 +21,12 @@ export const getEffectsFilePathsData = (): string[] => {
 
 export const resetEffectsData = (): void => {
     EFFECTS_DATA = createEffectsData();
+};
+
+export const getExecutedEffectsDataItemsCount = (): number => {
+    return getEffectsDataItems().filter((item) => item.getStatus() === EffectStatus.executed).length;
+};
+
+export const setEffectsDataItemsStatusesToProcessed = (): void => {
+    getEffectsDataItems().map((item) => item.setProcessedStatus());
 };

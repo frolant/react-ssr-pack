@@ -2,7 +2,12 @@
 import { renderToPipeableStream } from 'react-dom/server';
 
 import { getApiRequestsExecutionCount, resetApiRequestsExecutionCount } from '../services/apiRequestExecutionDataService';
-import { getEffectsFilePathsData, resetEffectsData } from '../services/effectsDataService';
+import {
+    setEffectsDataItemsStatusesToProcessed,
+    getExecutedEffectsDataItemsCount,
+    getEffectsFilePathsData,
+    resetEffectsData
+} from '../services/effectsDataService';
 
 import { getStringFromPipeableStream } from './utils';
 
@@ -31,12 +36,17 @@ export const nodeAppRender: TNodeAppRender = async (application, onRendered, max
         await onRendered();
 
         const apiRequestsCount = getApiRequestsExecutionCount();
+        const executedEffectsCount = getExecutedEffectsDataItemsCount();
 
-        console.warn('apiRequestsCount', apiRequestsCount);
-
+        setEffectsDataItemsStatusesToProcessed();
         resetApiRequestsExecutionCount();
 
-        if (apiRequestsCount > 0 && executedIterationsCount < maxIterationsCount) {
+        console.warn('nodeAppRender', {
+            apiRequestsCount,
+            executedEffectsCount
+        });
+
+        if (executedEffectsCount > 0 && executedIterationsCount < maxIterationsCount) {
             executedIterationsCount += 1;
             return render();
         }

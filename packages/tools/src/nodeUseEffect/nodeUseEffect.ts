@@ -2,13 +2,24 @@ import { addEffectsDataItem, getEffectsDataItem } from '../services/effectsDataS
 
 import type { TDependencies } from '../services/effectsDataService';
 
-export const nodeUseEffect = (callback: () => any, dependencies: TDependencies, effectId: string, effectFilePath: string): void => {
-    const existingEffectData = getEffectsDataItem(effectId);
+type TNodeUseEffect = (
+    callback: () => any,
+    dependenciesOrEffectId: TDependencies | null,
+    effectIdOrEffectFilePath: string,
+    effectFilePathOrNone: string | null
+) => void;
+
+export const nodeUseEffect: TNodeUseEffect = async (callback, dependencies, effectId, effectFilePath) => {
+    const existingEffectData = await getEffectsDataItem(effectId);
 
     if (!existingEffectData) {
-        addEffectsDataItem(effectId, effectFilePath, dependencies);
-        callback();
-    } else if (existingEffectData.isDependenciesChanged(dependencies)) {
-        callback();
+        await addEffectsDataItem(effectId, effectFilePath, dependencies);
+        await callback();
+    } else if (!dependencies) {
+        await callback();
+    } else if (dependencies.length && existingEffectData.isDependenciesChanged(dependencies)) {
+        // console.warn(effectFilePath, dependencies);
+        await existingEffectData.setExecutedStatus();
+        await callback();
     }
 };

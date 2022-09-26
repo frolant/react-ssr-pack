@@ -14,6 +14,7 @@ const getEffects = (options) => {
 
 const NodeAppRenderingBabelPlugin = (api) => {
     const { StringLiteral, NullLiteral } = api.types;
+    const nullArg = NullLiteral(null);
     api.caller(getTarget);
 
     return {
@@ -25,9 +26,13 @@ const NodeAppRenderingBabelPlugin = (api) => {
                         const filePath = path.relative(cwd, filename);
                         const effectId = md5(`${filePath}${node.loc.start.index}`);
 
+                        if (node.arguments.length === 1) {
+                            node.arguments.push(nullArg);
+                        }
+
                         node.arguments.push(
                             StringLiteral(effectId),
-                            isDevelopmentMode ? StringLiteral(`${filePath}:${node.loc.start.line}`) : NullLiteral(null)
+                            isDevelopmentMode ? StringLiteral(`${filePath}:${node.loc.start.line}`) : nullArg
                         );
                     }
                 });

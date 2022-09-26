@@ -1,9 +1,15 @@
-import { useMemo } from 'react';
+export enum EffectStatus {
+    processed = 'processed',
+    executed = 'executed'
+}
 
-export type TDependencies = any[];
+export type TDependencies = unknown[];
 
 export interface IEffectsDataItem {
     getFilePath: () => string;
+    getStatus: () => EffectStatus;
+    setExecutedStatus: () => void;
+    setProcessedStatus: () => void;
     isDependenciesChanged: (dependencies: TDependencies) => boolean;
 }
 
@@ -13,25 +19,36 @@ export type TEffectsDataItems = IEffectsDataItem[];
 
 export const createEffectsData = (): TEffectsData => new Map();
 
-export const createEffectsDataItem = (id: string, filePath: string, deps: TDependencies): IEffectsDataItem => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
-    const getDependenciesChangesCheckResult = (dependencies: TDependencies): number => useMemo(Math.random, dependencies);
+const isDependenciesChange = (prevDeps: TDependencies, nextDeps: TDependencies): boolean => {
+    let result = false;
+    prevDeps.forEach((item, key) => {
+        if (String(item) !== String(nextDeps[key])) {
+            result = true;
+        }
+    });
+    return result;
+};
 
+export const createEffectsDataItem = (id: string, filePath: string, deps: TDependencies): IEffectsDataItem => {
     const effectData = {
         id,
         filePath,
-        dependenciesId: getDependenciesChangesCheckResult(deps)
+        dependencies: deps,
+        status: EffectStatus.executed
     };
 
     return {
         getFilePath: () => effectData.filePath,
+        getStatus: () => effectData.status,
+        setExecutedStatus: () => {
+            effectData.status = EffectStatus.executed;
+        },
+        setProcessedStatus: () => {
+            effectData.status = EffectStatus.processed;
+        },
         isDependenciesChanged: (dependencies) => {
-            const updatedDepsCheckResult = getDependenciesChangesCheckResult(dependencies);
-            const result = effectData.dependenciesId !== updatedDepsCheckResult;
-            effectData.dependenciesId = updatedDepsCheckResult;
-
-            console.warn('isDependenciesChanged', result);
-
+            const result = isDependenciesChange(effectData.dependencies, dependencies);
+            effectData.dependencies = dependencies;
             return result;
         }
     };
