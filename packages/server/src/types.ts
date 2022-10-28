@@ -12,6 +12,7 @@ export interface IRenderServerAppResult {
     maxIterationsCount: number;
     executedIterationsCount: number;
     effectsFilePaths: string[];
+    responseLocation?: string;
     responseCode?: number;
     content: string;
     head: string;

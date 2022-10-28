@@ -13,6 +13,7 @@ interface IGetServerAppPageContentOptions {
 }
 
 type TGetServerAppPageContent = (options: IGetServerAppPageContentOptions) => Promise<{
+    responseLocation: string;
     responseCode: number;
     content: string;
 }>;
@@ -31,6 +32,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
     const compilationStartTime = new Date().getTime();
     const { originalUrl } = request;
 
+    let responseLocationResult;
     let responseCodeResult;
     let contentResult;
 
@@ -46,6 +48,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
             executedIterationsCount,
             effectsFilePaths,
             responseCode = defaultResponseCode,
+            responseLocation,
             content,
             head
         } = await serverAppRender({
@@ -56,6 +59,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
 
         const isSuccessResponseCode = responseCode === defaultResponseCode;
         contentResult = isSuccessResponseCode ? getServerAppHTML(head, content) : htmlTemplate;
+        responseLocationResult = responseLocation;
         responseCodeResult = responseCode;
 
         logExecution({
@@ -79,6 +83,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
     }
 
     return {
+        responseLocation: responseLocationResult,
         responseCode: responseCodeResult,
         content: contentResult
     };

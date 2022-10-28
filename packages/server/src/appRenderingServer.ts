@@ -40,12 +40,16 @@ const runAppServer: TRunAppServer = ({
     }));
 
     server.get('/*', async (request, response) => {
-        const { responseCode, content } = await getServerAppPageContent({
+        const { responseCode, responseLocation, content } = await getServerAppPageContent({
             logLevel,
             serverAppRender,
             appConfig,
             request
         });
+
+        if (responseLocation) {
+            response.location(responseLocation);
+        }
 
         return response.status(responseCode).send(content);
     });
