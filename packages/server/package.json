@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/server",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "description": "Server for listening a React SSR application based on React v18 and @react-ssr-pack",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
