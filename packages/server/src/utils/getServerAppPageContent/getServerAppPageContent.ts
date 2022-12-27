@@ -1,6 +1,6 @@
 import { logExecution, logLevels, logTrace } from '../logger';
 
-import { getServerAppHTML, htmlTemplate } from './getServerAppHTML';
+import { getServerAppHTML, htmlTemplate, getRequestData } from './utils';
 
 import type { TLogLevels } from '../logger';
 import type { TRenderAppConfig, TServerAppRender } from '../../types';
@@ -30,7 +30,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
     request
 }) => {
     const compilationStartTime = new Date().getTime();
-    const { originalUrl, headers } = request;
+    const { originalUrl } = request;
 
     let responseLocationResult;
     let responseCodeResult;
@@ -53,8 +53,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
             head
         } = await serverAppRender({
             app,
-            url: originalUrl,
-            host: headers.host,
+            request: getRequestData(request),
             ...restAppConfig
         });
 

@@ -1,6 +1,9 @@
 import { resolve } from 'path';
 import fs from 'fs';
 
+import type { Request } from 'express';
+import type { TRenderServerAppRequestOptions } from '../../types';
+
 type TGetServerAppHTML = (head: string, content: string) => string;
 
 const templatePath = resolve(__dirname, './template.html');
@@ -25,4 +28,14 @@ const template = {
 
 export const getServerAppHTML: TGetServerAppHTML = (head = '', content = '') => {
     return `${template.top}${head}${template.center}${container.start}${content}${container.end}${template.bottom}`;
+};
+
+export const getRequestData = (request: Request): TRenderServerAppRequestOptions => {
+    const { originalUrl, protocol, host, headers } = request;
+    return {
+        origin: `${protocol}://${headers.host}`,
+        url: originalUrl,
+        protocol,
+        host
+    };
 };

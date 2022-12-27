@@ -4,9 +4,15 @@ export type TRenderAppConfig<OptionsExtension = Record<string, unknown>> = Optio
     app: FC;
 };
 
-type TRenderServerAppOptions<OptionsExtension = Record<string, unknown>> = TRenderAppConfig<OptionsExtension> & {
+export interface TRenderServerAppRequestOptions {
     url: string;
     host: string;
+    origin: string;
+    protocol: string;
+}
+
+type TRenderServerAppOptions<OptionsExtension = Record<string, unknown>> = TRenderAppConfig<OptionsExtension> & {
+    request: TRenderServerAppRequestOptions;
 };
 
 export interface IRenderServerAppResult {
