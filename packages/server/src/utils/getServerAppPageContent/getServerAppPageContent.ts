@@ -30,7 +30,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
     request
 }) => {
     const compilationStartTime = new Date().getTime();
-    const { originalUrl } = request;
+    const { originalUrl, headers } = request;
 
     let responseLocationResult;
     let responseCodeResult;
@@ -54,6 +54,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
         } = await serverAppRender({
             app,
             url: originalUrl,
+            host: headers.host,
             ...restAppConfig
         });
 
