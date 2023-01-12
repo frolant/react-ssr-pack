@@ -31,11 +31,11 @@ export const getServerAppHTML: TGetServerAppHTML = (head = '', content = '') => 
 };
 
 export const getRequestData = (request: Request): TRenderServerAppRequestOptions => {
-    const { originalUrl, protocol, host, headers } = request;
+    const { originalUrl, protocol, hostname, headers } = request;
     return {
         origin: `${protocol}://${headers.host}`,
         url: originalUrl,
-        protocol,
-        host
+        hostname,
+        protocol
     };
 };

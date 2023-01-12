@@ -6,9 +6,9 @@ export type TRenderAppConfig<OptionsExtension = Record<string, unknown>> = Optio
 
 export interface TRenderServerAppRequestOptions {
     url: string;
-    host: string;
-    origin: string;
+    hostname: string;
     protocol: string;
+    origin: string;
 }
 
 type TRenderServerAppOptions<OptionsExtension = Record<string, unknown>> = TRenderAppConfig<OptionsExtension> & {
