@@ -19,13 +19,12 @@
     "scripts": {
         "build": "node ../../run build tools",
         "watch:to:lib": "node ../../run watch-to-lib tools",
-        "watch:to:app": "node ../../run watch-to-app tools",
-        "watch:to:app:types": "node ../../run watch-to-app-types tools"
+        "watch:to:app": "node ../../run watch-to-app tools"
     },
     "devDependencies": {
-        "@types/react-dom": "^18.0.6"
+        "@types/react-dom": "^18.0.10"
     },
     "peerDependencies": {
-        "react-dom": "^18.0.0"
+        "react-dom": "^18.2.0"
     }
 }

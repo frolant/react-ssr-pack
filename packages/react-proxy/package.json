@@ -19,13 +19,12 @@
     "scripts": {
         "build": "node ../../run build react-proxy",
         "watch:to:lib": "node ../../run watch-to-lib react-proxy",
-        "watch:to:app": "node ../../run watch-to-app react-proxy",
-        "watch:to:app:types": "node ../../run watch-to-app-types react-proxy"
+        "watch:to:app": "node ../../run watch-to-app react-proxy"
     },
     "dependencies": {
         "@react-ssr-pack/tools": "^1.0.5"
     },
     "peerDependencies": {
-        "react": "^18.0.0"
+        "react": "^18.2.0"
     }
 }

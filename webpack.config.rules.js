@@ -2,12 +2,12 @@ const { resolve } = require('path');
 
 const { babelLoader, tsLoader } = require('./webpack.config.loaders.js');
 
-module.exports = ({ packageName, watchWithTypes, appRepositoryPath }) => ([
+module.exports = ({ packageName, watchToApp, appRepositoryPath }) => ([
     {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: tsLoader({
-            watchWithTypes,
+            watchToApp,
             appRepositoryPath,
             packageName
         })

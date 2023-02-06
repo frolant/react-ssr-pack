@@ -19,11 +19,10 @@
     "scripts": {
         "build": "node ../../run build portal",
         "watch:to:lib": "node ../../run watch-to-lib portal",
-        "watch:to:app": "node ../../run watch-to-app portal",
-        "watch:to:app:types": "node ../../run watch-to-app-types portal"
+        "watch:to:app": "node ../../run watch-to-app portal"
     },
     "peerDependencies": {
-        "react": "^18.0.0",
-        "react-dom": "^18.0.0"
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
     }
 }

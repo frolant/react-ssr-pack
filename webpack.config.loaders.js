@@ -25,11 +25,11 @@ const babelLoader = [{
     }
 }];
 
-const tsLoader = ({ watchWithTypes, appRepositoryPath, packageName }) => ([
+const tsLoader = ({ watchToApp, appRepositoryPath, packageName }) => ([
     ...babelLoader,
     {
         loader: 'ts-loader',
-        ...(watchWithTypes && {
+        ...(watchToApp && {
             options: {
                 compilerOptions: {
                     outDir: resolve(__dirname, `${appRepositoryPath}/node_modules/@react-ssr-pack/${packageName}/lib`)

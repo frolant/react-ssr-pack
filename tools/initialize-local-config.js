@@ -6,7 +6,7 @@ const configFileName = 'local.config.json';
 
 (async function() {
     if (!fs.existsSync(`./${configFileName}`)) {
-        fs.copyFileSync(`./tools/scripts/templates/${configFileName}`, `./${configFileName}`);
+        fs.copyFileSync(`./tools/templates/${configFileName}`, `./${configFileName}`);
         console.log('\n Local configuration file created!');
     }
 }());

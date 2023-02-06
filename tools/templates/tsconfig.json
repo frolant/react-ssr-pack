@@ -4,6 +4,6 @@
         "outDir": "lib"
     },
     "include": [
-        "../../packages/${packageName}"
+        "../../packages/${packageName}/src"
     ]
 }

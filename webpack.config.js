@@ -6,7 +6,7 @@ const hotExtension = require('./webpack.config.hot.js');
 const rules = require('./webpack.config.rules.js');
 
 module.exports = (env, { mode }) => {
-    const { packageName, watchToApp, watchWithTypes, isNodeTarget } = env;
+    const { packageName, watchToApp, isNodeTarget } = env;
     const isProductionMode = mode === 'production';
     const packagePath = resolve(__dirname, `./packages/${packageName}/src/`);
 
@@ -23,11 +23,8 @@ module.exports = (env, { mode }) => {
         isProductionMode,
         isNodeTarget,
         ...options,
-        rules: rules({
-            watchWithTypes: watchToApp && watchWithTypes,
-            ...options
-        })
+        rules: rules(options)
     });
 
-    return isProductionMode ? config : hotExtension(config, options);
+    return isProductionMode ? config : hotExtension(config);
 };

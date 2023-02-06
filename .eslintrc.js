@@ -3,11 +3,18 @@ module.exports = {
         "browser": true,
         "es6": true
     },
-    "extends": ["airbnb-typescript"],
+    "extends": [
+        "airbnb-typescript"
+    ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "./tsconfig.eslint.json",
+        "project": "./tsconfig.json",
         "sourceType": "module"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     },
     "plugins": [
         "@typescript-eslint",
@@ -15,7 +22,8 @@ module.exports = {
         "eslint-plugin-prefer-arrow",
         "eslint-plugin-react",
         "eslint-plugin-jsx-a11y",
-        "react-hooks"
+        "react-hooks",
+        "import"
     ],
     "rules": {
         "@typescript-eslint/adjacent-overload-signatures": "error",

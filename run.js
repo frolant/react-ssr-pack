@@ -1,14 +1,14 @@
 'use strict';
 
 const { spawn } = require('child_process');
+const { resolve } = require('path');
 
-const { webpack } = require('./local.config.json');
+const webpack = resolve(__dirname, './node_modules/.bin/webpack');
 
 const commands = {
     ['build']: (packageName) => `cd ../../ && ${webpack} --mode production --env packageName=${packageName}`,
     ['watch-to-lib']: (packageName) => `cd ../../ && ${webpack} --mode development --env packageName=${packageName}`,
-    ['watch-to-app']: (packageName) => `cd ../../ && ${webpack} --mode development --env packageName=${packageName} watchToApp`,
-    ['watch-to-app-types']: (packageName) => `cd ../../ && ${webpack} --mode development --env packageName=${packageName} watchToApp watchWithTypes`
+    ['watch-to-app']: (packageName) => `cd ../../ && ${webpack} --mode development --env packageName=${packageName} watchToApp`
 };
 
 const spawnOptions = {

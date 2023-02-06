@@ -13,10 +13,9 @@
         "access": "public"
     },
     "scripts": {
-        "build": "node ../../tools/scripts/update-library-from-source resolve-plugin",
+        "build": "node ../../tools/update-library-from-source resolve-plugin",
         "watch:to:lib": "echo Watch mode not supported && exit 1",
-        "watch:to:app": "echo Watch mode not supported && exit 1",
-        "watch:to:app:types": "echo Watch mode not supported && exit 1"
+        "watch:to:app": "echo Watch mode not supported && exit 1"
     },
     "dependencies": {
         "@react-ssr-pack/react-proxy": "^1.0.5"

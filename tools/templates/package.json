@@ -19,7 +19,6 @@
     "scripts": {
         "build": "node ../../run build ${packageName}",
         "watch:to:lib": "node ../../run watch-to-lib ${packageName}",
-        "watch:to:app": "node ../../run watch-to-app ${packageName}",
-        "watch:to:app:types": "node ../../run watch-to-app-types ${packageName}"
+        "watch:to:app": "node ../../run watch-to-app ${packageName}"
     }
 }

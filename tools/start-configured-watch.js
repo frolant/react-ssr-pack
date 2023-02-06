@@ -4,9 +4,8 @@ const { spawn } = require('child_process');
 
 const {
     watchingToApp = false,
-    updateTypesOnceOnWatchingToApp = true,
     watchingPackagesNames: packagesNames = []
-} = require('../../local.config.json');
+} = require('../local.config.json');
 
 function getScopeOptions() {
     const namesListLine = packagesNames.map((packageName) => `${packageName}`).join(',');
@@ -16,8 +15,8 @@ function getScopeOptions() {
 (async function() {
     const destinationOption = watchingToApp ? 'app' : 'lib';
     const scopeOptions = packagesNames.length ? getScopeOptions() : '';
-    const typesUpdateOption = watchingToApp && !updateTypesOnceOnWatchingToApp ? ':types' : '';
-    spawn(`lerna run watch:to:${destinationOption}${typesUpdateOption} --parallel ${scopeOptions}`, {
+
+    spawn(`lerna run watch:to:${destinationOption} --parallel --stream ${scopeOptions}`, {
         stdio: 'inherit',
         shell: true
     });

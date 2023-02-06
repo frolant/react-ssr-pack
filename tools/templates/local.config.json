@@ -1,0 +1,7 @@
+{
+    "appRepositoryRelativePath": "../portal-ui",
+    "watchingToApp": true,
+    "watchingPackagesNames": [
+        "server"
+    ]
+}

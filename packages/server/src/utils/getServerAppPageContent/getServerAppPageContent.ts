@@ -73,7 +73,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
         if (logLevel === logLevels.trace) {
             logTrace(executedIterationsCount, maxIterationsCount, effectsFilePaths);
         }
-    } catch (errorData) {
+    } catch (errorData: any) {
         contentResult = htmlTemplate;
 
         logExecution({
