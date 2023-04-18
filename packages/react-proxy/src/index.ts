@@ -1,4 +1,4 @@
-// @ts-nocheck    <-- Remove after update React-types to v18
+// @ts-nocheck
 import React from 'react';
 
 import { nodeUseEffect } from '@react-ssr-pack/tools';

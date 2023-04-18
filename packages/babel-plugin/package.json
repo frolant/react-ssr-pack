@@ -14,8 +14,8 @@
     },
     "scripts": {
         "build": "node ../../tools/update-library-from-source  babel-plugin",
-        "watch:to:lib": "echo Watch mode not supported && exit 1",
-        "watch:to:app": "echo Watch mode not supported && exit 1"
+        "watch:to:lib": "echo Watch mode not supported && exit 0",
+        "watch:to:app": "echo Watch mode not supported && exit 0"
     },
     "dependencies": {
         "md5": "^2.3.0"

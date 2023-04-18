@@ -7,8 +7,7 @@ const packageFilesData = {
     'README.md': null,
     'tsconfig.json': null,
     'package.json': null,
-    '.npmignore': null,
-    '.npmrc': null
+    '.npmignore': null
 };
 
 const patchAndCopyFile = ({ sourcePath, destinationPath, packageName }) => {

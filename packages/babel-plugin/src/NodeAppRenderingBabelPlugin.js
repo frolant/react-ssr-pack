@@ -27,7 +27,7 @@ const NodeAppRenderingBabelPlugin = (api) => {
 
                         node.arguments.push(
                             StringLiteral(effectId),
-                            isDevelopmentMode ? StringLiteral(`${filePath}:${node.loc.start.line}`) : NullLiteral(null)
+                            isDevelopmentMode ? StringLiteral(`${filePath}:0`) : NullLiteral(null) // ${node.loc.start.line}
                         );
                     }
                 });

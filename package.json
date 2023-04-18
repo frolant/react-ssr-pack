@@ -14,26 +14,29 @@
     "scripts": {
         "init": "npm install --silent --no-audit --no-fund --no-save && lerna clean --yes && lerna bootstrap --hoist -- --no-package-lock && node ./tools/initialize-local-config.js",
         "build": "lerna run build --stream",
+        "start": "cd ./example && npm run app:hot",
         "watch": "node ./tools/start-configured-watch.js",
         "watch:to:lib": "lerna run watch:to:lib --parallel --stream",
         "watch:to:app": "lerna run watch:to:app --parallel --stream",
-        "publish": "npm run init && npm run build && npm run eslint && lerna publish",
-        "publish:git": "npm run init && npm run build && npm run eslint && lerna publish from-git",
-        "publish:pkg": "npm run init && npm run build && npm run eslint && lerna publish from-package",
+        "publish": "npm run init && npm run build && npm run stylelint && npm run eslint && lerna publish --no-private",
+        "publish:git": "npm run init && npm run build && npm run stylelint && npm run eslint && lerna publish from-git --no-private",
+        "publish:pkg": "npm run init && npm run build && npm run stylelint && npm run eslint && lerna publish from-package --no-private",
         "generate:package": "node ./tools/generate-package.js package-name",
+        "stylelint": "stylelint ./{packages/**/src,example/src}/**/*.{css,scss} --max-warnings 0",
         "eslint": "eslint ./packages --max-warnings 0",
         "lerna": "lerna"
     },
     "dependencies": {
         "react": "18.2.0",
-        "react-dom": "18.2.0"
+        "react-dom": "18.2.0",
+        "react-redux": "8.0.5"
     },
     "devDependencies": {
         "@babel/core": "7.21.4",
         "@babel/plugin-proposal-export-default-from": "7.18.10",
         "@babel/preset-env": "7.21.4",
         "@babel/preset-react": "7.18.6",
-        "@types/react": "18.0.33",
+        "@types/react": "18.0.37",
         "@types/react-dom": "18.0.11",
         "@typescript-eslint/eslint-plugin": "5.57.1",
         "@typescript-eslint/parser": "5.57.1",
