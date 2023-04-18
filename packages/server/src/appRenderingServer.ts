@@ -1,10 +1,11 @@
-import express, { Express } from 'express';
+import express from 'express';
 import { resolve } from 'path';
 
 import { getServerAppPageContent } from './utils/getServerAppPageContent';
 
 import { logExecution, startServerListeningMessage } from './utils/logger';
 
+import type { Express } from 'express';
 import type { TLogLevels } from './utils/logger';
 import type { TServerAppRender, TRenderAppConfig } from './types';
 

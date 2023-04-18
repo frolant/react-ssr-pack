@@ -27,12 +27,6 @@ module.exports = {
     ],
     "rules": {
         "@typescript-eslint/adjacent-overload-signatures": "error",
-        "@typescript-eslint/array-type": [
-            "error",
-            {
-                "default": "array"
-            }
-        ],
         "@typescript-eslint/ban-types": [
             "error",
             {
@@ -118,9 +112,12 @@ module.exports = {
             "warn",
             { "allowExpressions": true, "allowTypedFunctionExpressions": true }
         ],
-        "@typescript-eslint/array-type": ["error", {
-            default: 'array-simple',
-        }],
+        "@typescript-eslint/array-type": [
+            "error",
+            {
+                default: 'array-simple',
+            }
+        ],
         "complexity": "off",
         "constructor-super": "error",
         "default-case": "error",
@@ -160,7 +157,18 @@ module.exports = {
         "arrow-body-style": "off",
         "new-parens": "error",
         "no-bitwise": ["error", {"int32Hint": true}] ,
-        "no-underscore-dangle": "error",
+        "no-underscore-dangle": [
+            "error",
+            {
+                "allow": [
+                    "__REDUX_DEVTOOLS_EXTENSION__",
+                    "__SERVER_SIDE_RENDERING_PORT__",
+                    "__IS_PRODUCTION_MODE__",
+                    "__IS_TRACE_SSR_MODE__",
+                    "__HOST__"
+                ]
+            }
+        ],
         "no-plusplus": [
             "error",
             {
@@ -223,6 +231,14 @@ module.exports = {
         "comma-dangle": ["error", "never"],
         "no-unsafe-finally": "error",
         "no-unused-labels": "error",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "varsIgnorePattern": "^__[A-Z_]+__$",
+                "ignoreRestSiblings": true
+            }
+        ],
         "no-var": "error",
         "object-shorthand": "off",
         "one-var": [
@@ -236,7 +252,7 @@ module.exports = {
         "radix": "error",
         "eol-last": ["error"],
         "react/jsx-boolean-value": ["warn", "always"],
-        "react/no-array-index-key": "warn", // желательно включить
+        "react/no-array-index-key": "off",
         "react/jsx-curly-spacing": "off",
         "react/jsx-key": "error",
         "react/jsx-fragments": ["error", "syntax"],
@@ -250,7 +266,7 @@ module.exports = {
         ],
         "react/jsx-props-no-spreading": ["warn"], // желательно включить
         "react/prop-types": "off",
-        "react/require-default-props": "warn",
+        "react/require-default-props": "off",
         "spaced-comment": [
             "error",
             "always",

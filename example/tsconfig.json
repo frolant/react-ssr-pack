@@ -1,0 +1,14 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": "../example/src",
+        "outDir": "./dist"
+    },
+    "files": [
+        "./src/app-options.ts",
+        "./src/modules.d.ts"
+    ],
+    "include": [
+        "./src"
+    ]
+}

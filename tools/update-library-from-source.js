@@ -7,8 +7,9 @@ const updateLibraryFromSource = (from, to) => {
     if (!fs.existsSync(to)) {
         fs.mkdirSync(to);
     } else {
-        fs.rmdirSync(to, {
-            recursive: true
+        fs.rmSync(to, {
+            recursive: true,
+            force: true
         });
 
         fs.mkdirSync(to);
