@@ -4,7 +4,7 @@ const { host, devServerPort, serverSideRenderingPort, devServerMaxTimeout } = se
 const serverSideRenderingProxyTimeout = devServerMaxTimeout * 1000;
 const serverSideRenderingHost = `http://${host}:${serverSideRenderingPort}`;
 
-module.exports = () => ({
+module.exports = (isTestProductionMode) => ({
     devServer: {
         host: host,
         port: devServerPort,
@@ -19,7 +19,7 @@ module.exports = () => ({
             type: 'http'
         },
         devMiddleware: {
-            writeToDisk: (path) => /[\\/]server[\\/]/.test(path),
+            writeToDisk: isTestProductionMode ? true : (path) => /[\\/]server[\\/]/.test(path),
             index: false
         },
         proxy: {

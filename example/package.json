@@ -19,7 +19,8 @@
     ],
     "scripts": {
         "app:hot": "webpack serve --mode development",
-        "app:hot:debug": "webpack serve --mode development --env debug",
+        "app:hot:debug": "webpack serve --mode development --env debug-ssr-mode",
+        "app:hot:production": "webpack serve --mode production --env production-mode",
         "app:build": "webpack --mode production",
         "build": "echo Lerna Build mode not supported because this package with example application && exit 0",
         "watch:to:lib": "echo Lerna Watch mode not supported && exit 0",

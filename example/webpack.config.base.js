@@ -15,8 +15,9 @@ module.exports = ({ entryPointConfig, argv, env }) => {
     const { entryPointName, isServerSideRendering = false, useHotReload = false } = entryPointConfig;
     const { mode } = argv;
 
-    const isProductionMode = mode === 'production';
-    const idDebugSSRMode = !!env['debug'];
+    const isTestProductionMode = !!env['production-mode'];
+    const isProductionMode = mode === 'production' || isTestProductionMode;
+    const isDebugSSRMode = !!env['debug-ssr-mode'];
 
     const includeLiveReload = !isProductionMode && !isServerSideRendering;
     const includeHotReload = includeLiveReload && useHotReload;
@@ -77,11 +78,12 @@ module.exports = ({ entryPointConfig, argv, env }) => {
 
         ...getResolveConfig(context, isServerSideRendering),
 
-        ...(runDevServer && getDevServerConfig()),
+        ...(runDevServer && getDevServerConfig(isTestProductionMode)),
 
         ...getPluginsConfig({
-            idDebugSSRMode,
+            isDebugSSRMode,
             isProductionMode,
+            isTestProductionMode,
             includeHotReload,
             entryPointConfig,
             context,
