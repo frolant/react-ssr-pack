@@ -50,7 +50,8 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
             responseCode = defaultResponseCode,
             responseLocation,
             content,
-            head
+            head,
+            bottom
         } = await serverAppRender({
             app,
             request: getRequestData(request),
@@ -58,7 +59,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
         });
 
         const isSuccessResponseCode = responseCode === defaultResponseCode;
-        contentResult = isSuccessResponseCode ? getServerAppHTML(head, content) : htmlTemplate;
+        contentResult = isSuccessResponseCode ? getServerAppHTML(head, content, bottom) : htmlTemplate;
         responseLocationResult = responseLocation;
         responseCodeResult = responseCode;
 

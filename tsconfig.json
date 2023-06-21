@@ -25,6 +25,7 @@
         "incremental": true
     },
     "include": [
-        "packages/**/src"
+        "packages/**/src",
+        "example/src"
     ]
 }
