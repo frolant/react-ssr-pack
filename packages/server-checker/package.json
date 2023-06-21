@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/server-checker",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "SSR-server availability check handler for webpack dev-server configuration",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
