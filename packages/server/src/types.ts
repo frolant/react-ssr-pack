@@ -22,7 +22,8 @@ export interface IRenderServerAppResult {
     responseLocation?: string;
     responseCode?: number;
     content: string;
-    head: string;
+    head?: string;
+    bottom?: string;
 }
 
 export type TServerAppRender<OptionsExtension = Record<string, unknown>> = (

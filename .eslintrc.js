@@ -141,7 +141,6 @@ module.exports = {
         "import/order": "off",
         "jsdoc/check-alignment": "error",
         "jsdoc/check-indentation": "error",
-        "jsdoc/newline-after-description": "error",
         "jsdoc/no-types": "error",
         "max-classes-per-file": [
             "error",
@@ -162,6 +161,7 @@ module.exports = {
             {
                 "allow": [
                     "__REDUX_DEVTOOLS_EXTENSION__",
+                    "__PRELOADED_STATE__",
                     "__SERVER_SIDE_RENDERING_PORT__",
                     "__IS_PRODUCTION_MODE__",
                     "__IS_TRACE_SSR_MODE__",

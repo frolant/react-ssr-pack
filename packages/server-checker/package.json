@@ -1,8 +1,9 @@
 {
-    "name": "@react-ssr-pack/resolve-plugin",
-    "version": "1.0.10",
-    "description": "Webpack resolve plugin for resolving react-proxy in React SSR application based on React v18 and @react-ssr-pack",
+    "name": "@react-ssr-pack/server-checker",
+    "version": "1.0.3",
+    "description": "SSR-server availability check handler for webpack dev-server configuration",
     "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
     "author": "Anton Frolov",
     "license": "MIT",
     "repository": {
@@ -12,12 +13,12 @@
     "publishConfig": {
         "access": "public"
     },
+    "browserslist": [
+        "last 2 versions"
+    ],
     "scripts": {
-        "build": "node ../../tools/update-library-from-source resolve-plugin",
+        "build": "node ../../tools/update-library-from-source server-checker",
         "watch:to:lib": "echo Watch mode not supported && exit 0",
         "watch:to:app": "echo Watch mode not supported && exit 0"
-    },
-    "dependencies": {
-        "@react-ssr-pack/react-proxy": "^1.0.6"
     }
 }

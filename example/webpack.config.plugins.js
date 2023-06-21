@@ -16,7 +16,7 @@ const { serverConfig, getOutputGroupName } = require('./webpack.config.utils');
 
 const { host, devServerPort, serverSideRenderingPort } = serverConfig;
 
-module.exports = ({ context, entryPointConfig, includeHotReload, isProductionMode, idDebugSSRMode }) => {
+module.exports = ({ context, entryPointConfig, includeHotReload, isProductionMode, isDebugSSRMode }) => {
     const { isServerSideRendering, entryPointName } = entryPointConfig;
     const backendHost = isServerSideRendering ? `http://${host}:${devServerPort}` : '';
     const serverDistPath = join(context, '/dist/server');
@@ -35,7 +35,7 @@ module.exports = ({ context, entryPointConfig, includeHotReload, isProductionMod
                 }),
                 __SERVER_SIDE_RENDERING_PORT__: JSON.stringify(serverSideRenderingPort),
                 __IS_PRODUCTION_MODE__: JSON.stringify(isProductionMode),
-                __IS_TRACE_SSR_MODE__: JSON.stringify(idDebugSSRMode),
+                __IS_TRACE_SSR_MODE__: JSON.stringify(isDebugSSRMode),
                 __HOST__: JSON.stringify(backendHost)
             }),
 

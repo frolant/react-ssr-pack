@@ -40,6 +40,10 @@ const runAppServer: TRunAppServer = ({
         index: false
     }));
 
+    server.get('/check-server-availability', async (_, response) => {
+        return response.send();
+    });
+
     server.get('/*', async (request, response) => {
         const { responseCode, responseLocation, content } = await getServerAppPageContent({
             logLevel,

@@ -1,4 +1,6 @@
-const { serverConfig, checkServerSideRenderingAvailability } = require('./webpack.config.utils');
+const checkSSRAvailability = require('@react-ssr-pack/server-checker');
+
+const { serverConfig } = require('./webpack.config.utils');
 
 const { host, devServerPort, serverSideRenderingPort, devServerMaxTimeout } = serverConfig;
 const serverSideRenderingProxyTimeout = devServerMaxTimeout * 1000;
@@ -25,7 +27,7 @@ module.exports = () => ({
         proxy: {
             '**': {
                 target: serverSideRenderingHost,
-                bypass: checkServerSideRenderingAvailability(serverSideRenderingHost),
+                bypass: async () => await checkSSRAvailability(),
                 proxyTimeout: serverSideRenderingProxyTimeout,
                 timeout: serverSideRenderingProxyTimeout
             }

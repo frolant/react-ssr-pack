@@ -16,7 +16,7 @@ module.exports = ({ entryPointConfig, argv, env }) => {
     const { mode } = argv;
 
     const isProductionMode = mode === 'production';
-    const idDebugSSRMode = !!env['debug'];
+    const isDebugSSRMode = !!env['debug'];
 
     const includeLiveReload = !isProductionMode && !isServerSideRendering;
     const includeHotReload = includeLiveReload && useHotReload;
@@ -80,7 +80,7 @@ module.exports = ({ entryPointConfig, argv, env }) => {
         ...(runDevServer && getDevServerConfig()),
 
         ...getPluginsConfig({
-            idDebugSSRMode,
+            isDebugSSRMode,
             isProductionMode,
             includeHotReload,
             entryPointConfig,
