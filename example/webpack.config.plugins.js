@@ -36,7 +36,8 @@ module.exports = ({ context, entryPointConfig, includeHotReload, isProductionMod
                 __SERVER_SIDE_RENDERING_PORT__: JSON.stringify(serverSideRenderingPort),
                 __IS_PRODUCTION_MODE__: JSON.stringify(isProductionMode),
                 __IS_TRACE_SSR_MODE__: JSON.stringify(isDebugSSRMode),
-                __HOST__: JSON.stringify(backendHost)
+                __HOST__: JSON.stringify(backendHost),
+                SSR_RENDERS_COUNT: 'let SSR_RENDERS_COUNT'
             }),
 
             new CaseSensitivePathsWebpackPlugin(),

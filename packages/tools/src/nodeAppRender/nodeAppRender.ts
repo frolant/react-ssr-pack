@@ -1,7 +1,7 @@
 // @ts-ignore - REMOVE AFTER UPDATE TYPES FOR REACT 18
 import { renderToPipeableStream } from 'react-dom/server';
 
-import { getAddedEffectsDataItemsCount, setEffectsDataItemsStatusesToProcessed, getEffectsFilePathsData, resetEffectsData } from '../effectsDataService';
+import { getWaitingEffectsDataItemsCount, getEffectsFilePathsData, resetEffectsData } from '../effectsDataService';
 
 import { getStringFromPipeableStream } from './utils';
 
@@ -29,10 +29,9 @@ export const nodeAppRender: TNodeAppRender = async (application, onRendered, max
 
         await onRendered();
 
-        const addedEffectsCount = getAddedEffectsDataItemsCount();
-        setEffectsDataItemsStatusesToProcessed();
+        const waitingEffectsCount = getWaitingEffectsDataItemsCount();
 
-        if (addedEffectsCount > 0 && executedIterationsCount < maxIterationsCount) {
+        if (waitingEffectsCount > 0 && executedIterationsCount < maxIterationsCount) {
             executedIterationsCount += 1;
             return render();
         }

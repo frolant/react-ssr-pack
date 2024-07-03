@@ -14,12 +14,21 @@ export const addEffectsDataItem = (effectId: string, effectFilePath: string): vo
     EFFECTS_DATA.set(effectId, effectsDataItem);
 };
 
-export const getAddedEffectsDataItemsCount = (): number => {
-    return getEffectsDataItems().filter((item) => item.getStatus() === EffectStatus.added).length;
+export const checkEffectForNeedExecution = (effectId: string): boolean => {
+    return EFFECTS_DATA.get(effectId).getStatus() === EffectStatus.waiting;
 };
 
-export const setEffectsDataItemsStatusesToProcessed = (): void => {
-    getEffectsDataItems().map((item) => item.setStatusProcessed());
+export const processExecutionCount = (effectId: string, maxExecutionsCount: number): void => {
+    const effect = EFFECTS_DATA.get(effectId);
+    effect.increaseExecutionsCount();
+
+    if (effect.getExecutionsCount() >= maxExecutionsCount) {
+        effect.setStatusToFinished();
+    }
+};
+
+export const getWaitingEffectsDataItemsCount = (): number => {
+    return getEffectsDataItems().filter((item) => item.getStatus() === EffectStatus.waiting).length;
 };
 
 export const getEffectsFilePathsData = (): string[] => {

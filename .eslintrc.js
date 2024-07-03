@@ -235,7 +235,7 @@ module.exports = {
         "@typescript-eslint/no-unused-vars": [
             "error",
             {
-                "varsIgnorePattern": "^__[A-Z_]+__$",
+                "varsIgnorePattern": "^__[A-Z_]+__$|SSR_RENDERS_COUNT",
                 "ignoreRestSiblings": true
             }
         ],

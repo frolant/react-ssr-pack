@@ -1,8 +1,9 @@
 export {
     checkEffectIdExistence,
     addEffectsDataItem,
-    getAddedEffectsDataItemsCount,
-    setEffectsDataItemsStatusesToProcessed,
+    checkEffectForNeedExecution,
+    processExecutionCount,
+    getWaitingEffectsDataItemsCount,
     getEffectsFilePathsData,
     resetEffectsData
 } from './effectsDataService';

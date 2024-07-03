@@ -40,7 +40,7 @@ export const {
     version
 } = React;
 
-export const useEffect: TUseEffect = (callback, ...args) => nodeUseEffect(callback, ...args.slice(-2));
+export const useEffect: TUseEffect = (callback, ...args) => nodeUseEffect(callback, ...args.slice(-3));
 
 export const useLayoutEffect: TUseEffect = () => {};
 
