@@ -28,7 +28,7 @@ const Footer: React.FC<IProps> = ({ className, menu }) => (
             </div>
 
             <div className={styles.footer__copyright}>
-                Copyright © 2022-{new Date().getFullYear()}
+                {`Copyright © 2022-${new Date().getFullYear()}`}
 
                 <a
                     className={classnames(styles.footer__link, styles.footer__copyright_author)}

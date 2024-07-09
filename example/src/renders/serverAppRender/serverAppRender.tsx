@@ -56,7 +56,12 @@ const serverAppRender: TServerAppRender<IRenderOptionsExtension> = async ({
         </HeadDataSwitchContainerProvider>
     ), onRenderedHandler);
 
-    return getProcessedRenderingResultData(renderingResult, routerContext, headDataContext);
+    return getProcessedRenderingResultData({
+        initialState: store.getState(),
+        renderingResult,
+        headDataContext,
+        routerContext
+    });
 };
 
 export default serverAppRender;

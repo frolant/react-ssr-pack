@@ -30,7 +30,9 @@ const clientAppRender: TClientAppRender<IRenderOptionsExtension> = ({
     reducers,
     sagas
 }) => {
-    const { store } = initStore(reducers, sagas);
+    const initialStore = window.__PRELOADED_STATE__;
+    const { store } = initStore(reducers, sagas, initialStore);
+    delete window.__PRELOADED_STATE__;
 
     return runApp((
         <HeadDataSwitchContainerProvider>

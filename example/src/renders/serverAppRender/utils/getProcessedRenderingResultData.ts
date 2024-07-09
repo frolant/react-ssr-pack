@@ -5,6 +5,7 @@ import type { INodeAppRenderResultData } from '@react-ssr-pack/tools';
 import type { StaticRouterContext as IRouterContext } from 'react-router';
 import type { IHeadDataSwitchContainerContext } from 'components/HeadDataSwitchContainer';
 import type { IRenderServerAppResult } from '@react-ssr-pack/server';
+import type { Store as TStore } from 'redux';
 
 interface TGetHttpCodeDataResult {
     code: httpCodes;
@@ -14,11 +15,14 @@ interface TGetHttpCodeDataResult {
 type TGetRedirectCodeByRouter = (url: string) => httpCodes;
 type TGetProcessedCodeData = (context: IRouterContext) => TGetHttpCodeDataResult;
 
-type TGetProcessedRenderingResultData = (
-    data: INodeAppRenderResultData,
-    routerContext: IRouterContext,
-    headDataContext: IHeadDataSwitchContainerContext
-) => IRenderServerAppResult;
+interface IGetProcessedRenderingResultData {
+    renderingResult: INodeAppRenderResultData;
+    headDataContext: IHeadDataSwitchContainerContext;
+    routerContext: IRouterContext;
+    initialState: TStore;
+}
+
+type TGetProcessedRenderingResultData = (data: IGetProcessedRenderingResultData) => IRenderServerAppResult;
 
 const defaultHttpCode = httpCodes.Success;
 
@@ -36,7 +40,17 @@ export const getProcessedLocationData: TGetProcessedCodeData = ({ action, url })
     };
 };
 
-export const getProcessedRenderingResultData: TGetProcessedRenderingResultData = (renderingResult, routerContext, headDataContext) => {
+const getProcessedState = (state: TStore): string => {
+    return `
+    <script type="text/javascript">window.__PRELOADED_STATE__ = ${JSON.stringify(state).replace(/</g, '\\u003c')};</script>`;
+};
+
+export const getProcessedRenderingResultData: TGetProcessedRenderingResultData = ({
+    renderingResult,
+    headDataContext,
+    routerContext,
+    initialState
+}) => {
     const { content, ...data } = renderingResult;
     const { helmet: { title, meta, link, script } } = headDataContext;
     const { code, location } = getProcessedLocationData(routerContext);
@@ -45,6 +59,7 @@ export const getProcessedRenderingResultData: TGetProcessedRenderingResultData =
         ...data,
         head: `${title.toString()}${meta.toString()}${link.toString()}${script.toString()}`,
         content: content.replace(/<!-- -->|<!--\$-->|<!--\/\$-->/g, ''),
+        bottom: getProcessedState(initialState),
         responseLocation: location,
         responseCode: code
     };
