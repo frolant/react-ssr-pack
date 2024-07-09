@@ -1,5 +1,6 @@
 export enum EffectStatus {
     waiting = 'waiting',
+    executed = 'executed',
     finished = 'finished'
 }
 
@@ -7,6 +8,8 @@ interface IEffectsDataItem {
     getFilePath: () => string;
     getStatus: () => EffectStatus;
     getExecutionsCount: () => number;
+    setStatusToWaiting: () => void;
+    setStatusToExecuted: () => void;
     setStatusToFinished: () => void;
     increaseExecutionsCount: () => void;
 }
@@ -29,6 +32,12 @@ export const createEffectsDataItem = (effectId: string, effectFilePath: string):
         getFilePath: () => effectData.filePath,
         getStatus: () => effectData.status,
         getExecutionsCount: () => effectData.executionsCount,
+        setStatusToWaiting: () => {
+            effectData.status = EffectStatus.waiting;
+        },
+        setStatusToExecuted: () => {
+            effectData.status = EffectStatus.executed;
+        },
         setStatusToFinished: () => {
             effectData.status = EffectStatus.finished;
         },

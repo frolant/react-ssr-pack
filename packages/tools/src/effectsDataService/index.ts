@@ -5,5 +5,6 @@ export {
     processExecutionCount,
     getWaitingEffectsDataItemsCount,
     getEffectsFilePathsData,
+    resetEffectsStatuses,
     resetEffectsData
 } from './effectsDataService';

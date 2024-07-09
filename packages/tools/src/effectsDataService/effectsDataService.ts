@@ -14,15 +14,19 @@ export const addEffectsDataItem = (effectId: string, effectFilePath: string): vo
     EFFECTS_DATA.set(effectId, effectsDataItem);
 };
 
-export const checkEffectForNeedExecution = (effectId: string): boolean => {
-    return EFFECTS_DATA.get(effectId).getStatus() === EffectStatus.waiting;
+export const checkEffectForNeedExecution = (effectId: string, maxExecutionsCount: number): boolean => {
+    const effect = EFFECTS_DATA.get(effectId);
+    const isWaiting = effect.getStatus() !== EffectStatus.finished;
+    return isWaiting && effect.getExecutionsCount() < maxExecutionsCount;
 };
 
 export const processExecutionCount = (effectId: string, maxExecutionsCount: number): void => {
     const effect = EFFECTS_DATA.get(effectId);
-    effect.increaseExecutionsCount();
 
-    if (effect.getExecutionsCount() >= maxExecutionsCount) {
+    if (effect.getExecutionsCount() < maxExecutionsCount) {
+        effect.getStatus() === EffectStatus.waiting && effect.increaseExecutionsCount();
+        effect.setStatusToExecuted();
+    } else {
         effect.setStatusToFinished();
     }
 };
@@ -33,6 +37,14 @@ export const getWaitingEffectsDataItemsCount = (): number => {
 
 export const getEffectsFilePathsData = (): string[] => {
     return getEffectsDataItems().map((item) => item.getFilePath());
+};
+
+export const resetEffectsStatuses = (): void => {
+    getEffectsDataItems().forEach((item) => {
+        if (item.getStatus() === EffectStatus.executed) {
+            item.setStatusToWaiting();
+        }
+    });
 };
 
 export const resetEffectsData = (): void => {
