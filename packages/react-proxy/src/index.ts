@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from 'react';
 
-import { nodeUseEffect } from '@react-ssr-pack/tools';
+import { nodeUseEffect, getNotIdentifiedEffectData } from '@react-ssr-pack/tools';
 
 type TUseEffect = (callback: () => void) => void;
 
@@ -40,7 +40,10 @@ export const {
     version
 } = React;
 
-export const useEffect: TUseEffect = (callback, ...args) => nodeUseEffect(callback, ...args.slice(-3));
+export const useEffect: TUseEffect = (callback, ...args) => {
+    const data = args.length < 4 ? getNotIdentifiedEffectData() : args.slice(-3);
+    nodeUseEffect(callback, ...data);
+};
 
 export const useLayoutEffect: TUseEffect = () => {};
 

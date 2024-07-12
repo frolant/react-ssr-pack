@@ -36,7 +36,7 @@ const NodeAppRenderingBabelPlugin = (api) => {
                         }
 
                         if (arguments[0]) {
-                            const { start, end } = arguments[0].body;
+                            const { start, end } = arguments[0].body || {};
                             const localCountData = code.slice(start, end).match(/[0-9]+/);
                             ssrRendersCount = localCountData ? localCountData[0] : ssrRendersCount;
                         }

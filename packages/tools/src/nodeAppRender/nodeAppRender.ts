@@ -36,23 +36,17 @@ export const nodeAppRender: TNodeAppRender = async (application, onRendered, max
         if (waitingEffectsCount > 0 && executedIterationsCount < maxIterationsCount) {
             executedIterationsCount += 1;
             return render();
+        } else {
+            const effectsFilePaths = getEffectsFilePathsData();
+            resetEffectsData();
+            return {
+                maxIterationsCount,
+                executedIterationsCount,
+                effectsFilePaths,
+                content
+            };
         }
-
-        const effectsFilePaths = getEffectsFilePathsData();
-
-        return {
-            maxIterationsCount,
-            executedIterationsCount,
-            effectsFilePaths,
-            content
-        };
     };
 
-    const runRenderingProcess = async (): TNodeAppRenderResult => {
-        const result = await render();
-        resetEffectsData();
-        return result;
-    };
-
-    return runRenderingProcess();
+    return render();
 };

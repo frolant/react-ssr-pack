@@ -2,8 +2,22 @@ import { createEffectsData, createEffectsDataItem, EffectStatus } from './utils'
 import type { TEffectsDataItems } from './utils';
 
 let EFFECTS_DATA = createEffectsData();
+let NOT_IDENTIFIED_EFFECTS_COUNTER = 0;
 
 const getEffectsDataItems = (): TEffectsDataItems => Array.from(EFFECTS_DATA.values());
+
+const resetNotIdentifiedEffectsData = (): void => {
+    NOT_IDENTIFIED_EFFECTS_COUNTER = 0;
+};
+
+export const getNotIdentifiedEffectData = (): string[] => {
+    NOT_IDENTIFIED_EFFECTS_COUNTER = NOT_IDENTIFIED_EFFECTS_COUNTER + 1;
+    return [
+        `not-identified-effect-${NOT_IDENTIFIED_EFFECTS_COUNTER.toString()}`,
+        '1',
+        '/'
+    ];
+};
 
 export const checkEffectIdExistence = (effectId: string): boolean => {
     return !!EFFECTS_DATA.get(effectId);
@@ -40,6 +54,7 @@ export const getEffectsFilePathsData = (): string[] => {
 };
 
 export const resetEffectsStatuses = (): void => {
+    resetNotIdentifiedEffectsData();
     getEffectsDataItems().forEach((item) => {
         if (item.getStatus() === EffectStatus.executed) {
             item.setStatusToWaiting();
