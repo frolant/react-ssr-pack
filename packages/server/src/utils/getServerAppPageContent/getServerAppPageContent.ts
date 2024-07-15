@@ -2,6 +2,8 @@ import { logExecution, logLevels, logTrace } from '../logger';
 
 import { getServerAppHTML, htmlTemplate, getRequestData } from './utils';
 
+import stateCacheService from '../../services/stateCacheService';
+
 import type { TLogLevels } from '../logger';
 import type { TRenderAppConfig, TServerAppRender } from '../../types';
 
@@ -51,7 +53,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
             responseLocation,
             content,
             head,
-            bottom
+            state
         } = await serverAppRender({
             app,
             request: getRequestData(request),
@@ -59,9 +61,11 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
         });
 
         const isSuccessResponseCode = responseCode === defaultResponseCode;
-        contentResult = isSuccessResponseCode ? getServerAppHTML(head, content, bottom) : htmlTemplate;
+        contentResult = isSuccessResponseCode ? getServerAppHTML(originalUrl, head, content) : htmlTemplate;
         responseLocationResult = responseLocation;
         responseCodeResult = responseCode;
+
+        isSuccessResponseCode && stateCacheService.create(originalUrl, state);
 
         logExecution({
             ...defaultLogData,

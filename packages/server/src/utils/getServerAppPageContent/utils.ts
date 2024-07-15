@@ -1,10 +1,12 @@
 import { resolve } from 'path';
 import fs from 'fs';
 
+import { stateAddressPart } from '../../constants';
+
 import type { Request } from 'express';
 import type { TRenderServerAppRequestOptions } from '../../types';
 
-type TGetServerAppHTML = (head: string, content: string, bottom?: string) => string;
+type TGetServerAppHTML = (originalUrl: string, head: string, content: string) => string;
 
 const templatePath = resolve(__dirname, './template.html');
 const titleRegexp = /<title>.*<\/title>/;
@@ -26,8 +28,9 @@ const template = {
     bottom: templateProcessedContentParts[1]
 };
 
-export const getServerAppHTML: TGetServerAppHTML = (head = '', content = '', bottom = '') => {
-    return `${template.top}${head}${template.center}${container.start}${content}${container.end}${bottom}${template.bottom}`;
+export const getServerAppHTML: TGetServerAppHTML = (url = '', head = '', content = '') => {
+    const headData = `${head}\r\n<script defer src="${stateAddressPart}${url}"></script>`;
+    return `${template.top}${headData}${template.center}${container.start}${content}${container.end}${template.bottom}`;
 };
 
 export const getRequestData = (request: Request): TRenderServerAppRequestOptions => {

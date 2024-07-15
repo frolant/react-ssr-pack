@@ -1,9 +1,11 @@
 import express from 'express';
 import { resolve } from 'path';
 
-import { getServerAppPageContent } from './utils/getServerAppPageContent';
-
 import { logExecution, startServerListeningMessage } from './utils/logger';
+import { getServerAppPageContent } from './utils/getServerAppPageContent';
+import { getServerAppState } from './utils/getServerAppState';
+
+import { staticRelativePath, stateAddressPart } from './constants';
 
 import type { Express } from 'express';
 import type { TLogLevels } from './utils/logger';
@@ -18,8 +20,6 @@ export interface IRunAppServerOptions {
 }
 
 type TRunAppServer = (options: IRunAppServerOptions) => void;
-
-const staticRelativePath = '../client';
 
 const runAppServer: TRunAppServer = ({
     serverAppRender,
@@ -42,6 +42,11 @@ const runAppServer: TRunAppServer = ({
 
     server.get('/check-server-availability', async (_, response) => {
         return response.send();
+    });
+
+    server.get(`${stateAddressPart}*`, async (request, response) => {
+        const stateData = getServerAppState(request);
+        return response.send(stateData);
     });
 
     server.get('/*', async (request, response) => {
