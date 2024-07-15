@@ -1,5 +1,5 @@
 import React from 'react';
-import { hydrateRoot, createRoot } from 'react-dom/client';
+import { /* hydrateRoot, */ createRoot } from 'react-dom/client';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -22,7 +22,9 @@ import type { IRenderOptionsExtension } from '../types';
 const rootElement = document.getElementById('root');
 
 const runApp = (App: ReactNode): Root | void => {
-    return rootElement.innerHTML ? hydrateRoot(rootElement, App) : createRoot(rootElement).render(App);
+    // Temporary disable hydrate process
+    // return rootElement.innerHTML ? hydrateRoot(rootElement, App) : createRoot(rootElement).render(App);
+    return createRoot(rootElement).render(App);
 };
 
 const clientAppRender: TClientAppRender<IRenderOptionsExtension> = ({
@@ -30,7 +32,9 @@ const clientAppRender: TClientAppRender<IRenderOptionsExtension> = ({
     reducers,
     sagas
 }) => {
-    const { store } = initStore(reducers, sagas);
+    const initialStore = window.__PRELOADED_STATE__;
+    const { store } = initStore(reducers, sagas, initialStore);
+    delete window.__PRELOADED_STATE__;
 
     return runApp((
         <HeadDataSwitchContainerProvider>
