@@ -6,9 +6,8 @@ import { stateAddressPart } from '../../constants';
 
 export const getServerAppState = ({ originalUrl = '' }): string => {
     const id = originalUrl.replace(stateAddressPart, '');
-    const state = stateCacheService.get(id);
-
-    state && stateCacheService.delete(id);
+    const state = stateCacheService.getItem(id);
+    state && stateCacheService.deleteItem(id);
 
     return getStateScriptContent(state);
 };

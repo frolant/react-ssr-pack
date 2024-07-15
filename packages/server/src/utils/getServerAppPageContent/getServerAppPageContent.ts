@@ -65,7 +65,7 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
         responseLocationResult = responseLocation;
         responseCodeResult = responseCode;
 
-        isSuccessResponseCode && stateCacheService.create(originalUrl, state);
+        isSuccessResponseCode && stateCacheService.createItem(originalUrl, state);
 
         logExecution({
             ...defaultLogData,
