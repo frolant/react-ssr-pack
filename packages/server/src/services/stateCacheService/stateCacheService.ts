@@ -5,7 +5,7 @@ export interface IStateCacheService {
     createItem: (id: string, data: string) => void;
 }
 
-const clearCacheItemsLengthLimit = 1000;
+const clearCacheItemsLengthLimit = 100;
 
 export const createStateCacheService = (): IStateCacheService => {
     const cache = createCacheData();
