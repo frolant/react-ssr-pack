@@ -2,8 +2,7 @@ import { logExecution, logLevels, logTrace } from '../logger';
 
 import { getServerAppHTML, htmlTemplate, getRequestData } from './utils';
 
-import stateCacheService from '../../services/stateCacheService';
-
+import type { IStateCacheService } from '../../services/stateCacheService';
 import type { TLogLevels } from '../logger';
 import type { TRenderAppConfig, TServerAppRender } from '../../types';
 
@@ -14,7 +13,7 @@ interface IGetServerAppPageContentOptions {
     request: any;
 }
 
-type TGetServerAppPageContent = (options: IGetServerAppPageContentOptions) => Promise<{
+type TGetServerAppPageContent = (stateCacheService: IStateCacheService, options: IGetServerAppPageContentOptions) => Promise<{
     responseLocation: string;
     responseCode: number;
     content: string;
@@ -22,7 +21,7 @@ type TGetServerAppPageContent = (options: IGetServerAppPageContentOptions) => Pr
 
 const defaultResponseCode = 200;
 
-export const getServerAppPageContent: TGetServerAppPageContent = async ({
+export const getServerAppPageContent: TGetServerAppPageContent = async (stateCacheService, {
     serverAppRender,
     appConfig: {
         app,
@@ -92,4 +91,8 @@ export const getServerAppPageContent: TGetServerAppPageContent = async ({
         responseCode: responseCodeResult,
         content: contentResult
     };
+};
+
+export const createGetServerAppPageContentHandler = (cacheService: IStateCacheService) => {
+    return (options: IGetServerAppPageContentOptions) => getServerAppPageContent(cacheService, options);
 };

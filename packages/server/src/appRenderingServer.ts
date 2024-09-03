@@ -4,7 +4,7 @@ import { resolve } from 'path';
 import createDefaultStateCacheService from './services/stateCacheService';
 
 import { logExecution, startServerListeningMessage } from './utils/logger';
-import { getServerAppPageContent } from './utils/getServerAppPageContent';
+import { createGetServerAppPageContentHandler } from './utils/getServerAppPageContent';
 import { createGetServerAppStateHandler } from './utils/getServerAppState';
 
 import { staticRelativePath, stateAddressPart } from './constants';
@@ -34,10 +34,11 @@ const runAppServer: TRunAppServer = ({
     stateCacheService
 }): void => {
     const startTime = new Date().getTime();
-
     const cacheService = stateCacheService || createDefaultStateCacheService();
-    const getServerAppState = createGetServerAppStateHandler(cacheService);
     const staticPath = resolve(__dirname, staticRelativePath);
+
+    const getServerAppState = createGetServerAppStateHandler(cacheService);
+    const getServerAppPageContent = createGetServerAppPageContentHandler(cacheService);
     const server = express();
 
     if (onServerInitialization) {

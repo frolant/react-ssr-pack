@@ -1,1 +1,1 @@
-export { getServerAppPageContent } from './getServerAppPageContent';
+export { createGetServerAppPageContentHandler } from './getServerAppPageContent';
