@@ -6,7 +6,7 @@ import type { IStateCacheService } from '../../services/stateCacheService';
 import type { TLogLevels } from '../logger';
 import type { TRenderAppConfig, TServerAppRender } from '../../types';
 
-interface IGetServerAppPageContentOptions {
+export interface IGetServerAppPageContentOptions {
     serverAppRender: TServerAppRender<Record<string, unknown>>;
     appConfig: TRenderAppConfig;
     logLevel: TLogLevels;
@@ -91,8 +91,4 @@ export const getServerAppPageContent: TGetServerAppPageContent = async (stateCac
         responseCode: responseCodeResult,
         content: contentResult
     };
-};
-
-export const createGetServerAppPageContentHandler = (cacheService: IStateCacheService) => {
-    return (options: IGetServerAppPageContentOptions) => getServerAppPageContent(cacheService, options);
 };

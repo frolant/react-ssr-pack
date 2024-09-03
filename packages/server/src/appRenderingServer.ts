@@ -4,8 +4,8 @@ import { resolve } from 'path';
 import createDefaultStateCacheService from './services/stateCacheService';
 
 import { logExecution, startServerListeningMessage } from './utils/logger';
-import { createGetServerAppPageContentHandler } from './utils/getServerAppPageContent';
-import { createGetServerAppStateHandler } from './utils/getServerAppState';
+import createGetServerAppPageContentHandler from './utils/getServerAppPageContent';
+import createGetServerAppStateHandler from './utils/getServerAppState';
 
 import { staticRelativePath, stateAddressPart } from './constants';
 
