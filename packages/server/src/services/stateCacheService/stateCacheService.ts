@@ -1,8 +1,8 @@
 import { createCacheData, getProcessedData } from './utils';
 
 export interface IStateCacheService {
-    getItem: (id: string) => string;
     createItem: (id: string, data: string) => void;
+    getItem: (id: string) => string;
 }
 
 const clearCacheItemsLengthLimit = 100;

@@ -1,15 +1,18 @@
 import express from 'express';
 import { resolve } from 'path';
 
+import createDefaultStateCacheService from './services/stateCacheService';
+
 import { logExecution, startServerListeningMessage } from './utils/logger';
 import { getServerAppPageContent } from './utils/getServerAppPageContent';
-import { getServerAppState } from './utils/getServerAppState';
+import { createGetServerAppStateHandler } from './utils/getServerAppState';
 
 import { staticRelativePath, stateAddressPart } from './constants';
 
 import type { Express } from 'express';
 import type { TLogLevels } from './utils/logger';
 import type { TServerAppRender, TRenderAppConfig } from './types';
+import type { IStateCacheService } from './services/stateCacheService';
 
 export interface IRunAppServerOptions {
     serverAppRender: TServerAppRender<Record<string, unknown>>;
@@ -17,6 +20,7 @@ export interface IRunAppServerOptions {
     logLevel: TLogLevels;
     port: number;
     onServerInitialization?: (server: Express) => void;
+    stateCacheService?: IStateCacheService;
 }
 
 type TRunAppServer = (options: IRunAppServerOptions) => void;
@@ -26,9 +30,13 @@ const runAppServer: TRunAppServer = ({
     appConfig,
     port,
     logLevel,
-    onServerInitialization
+    onServerInitialization,
+    stateCacheService
 }): void => {
     const startTime = new Date().getTime();
+
+    const cacheService = stateCacheService || createDefaultStateCacheService();
+    const getServerAppState = createGetServerAppStateHandler(cacheService);
     const staticPath = resolve(__dirname, staticRelativePath);
     const server = express();
 

@@ -1,1 +1,1 @@
-export { getServerAppState } from './getServerAppState';
+export { createGetServerAppStateHandler } from './getServerAppState';
