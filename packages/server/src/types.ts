@@ -11,6 +11,11 @@ export interface TRenderServerAppRequestOptions {
     origin: string;
 }
 
+export interface IStateCacheService {
+    createItem: (id: string, data: string) => Promise<void>;
+    getItem: (id: string) => Promise<string>;
+}
+
 type TRenderServerAppOptions<OptionsExtension = Record<string, unknown>> = TRenderAppConfig<OptionsExtension> & {
     request: TRenderServerAppRequestOptions;
 };

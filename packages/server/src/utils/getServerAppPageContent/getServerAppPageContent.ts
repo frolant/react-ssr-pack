@@ -2,9 +2,8 @@ import { logExecution, logLevels, logTrace } from '../logger';
 
 import { getServerAppHTML, htmlTemplate, getRequestData } from './utils';
 
-import type { IStateCacheService } from '../../services/stateCacheService';
 import type { TLogLevels } from '../logger';
-import type { TRenderAppConfig, TServerAppRender } from '../../types';
+import type { TRenderAppConfig, TServerAppRender, IStateCacheService } from '../../types';
 
 export interface IGetServerAppPageContentOptions {
     serverAppRender: TServerAppRender<Record<string, unknown>>;
@@ -60,11 +59,13 @@ export const getServerAppPageContent: TGetServerAppPageContent = async (stateCac
         });
 
         const isSuccessResponseCode = responseCode === defaultResponseCode;
-        contentResult = isSuccessResponseCode ? getServerAppHTML(originalUrl, head, content) : htmlTemplate;
+        const preloadedStateCode = encodeURIComponent(originalUrl);
+
+        contentResult = isSuccessResponseCode ? getServerAppHTML(preloadedStateCode, head, content) : htmlTemplate;
         responseLocationResult = responseLocation;
         responseCodeResult = responseCode;
 
-        isSuccessResponseCode && stateCacheService.createItem(originalUrl, state);
+        isSuccessResponseCode && await stateCacheService.createItem(preloadedStateCode, state);
 
         logExecution({
             ...defaultLogData,

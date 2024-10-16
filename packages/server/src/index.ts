@@ -5,7 +5,8 @@ export type {
     TServerAppRender,
     TClientAppRender,
     IRenderServerAppResult,
-    TRenderServerAppRequestOptions
+    TRenderServerAppRequestOptions,
+    IStateCacheService
 } from './types';
 
 export { logLevels } from './utils/logger';

@@ -11,8 +11,7 @@ import { staticRelativePath, stateAddressPart } from './constants';
 
 import type { Express } from 'express';
 import type { TLogLevels } from './utils/logger';
-import type { TServerAppRender, TRenderAppConfig } from './types';
-import type { IStateCacheService } from './services/stateCacheService';
+import type { TServerAppRender, TRenderAppConfig, IStateCacheService } from './types';
 
 export interface IRunAppServerOptions {
     serverAppRender: TServerAppRender<Record<string, unknown>>;
@@ -54,7 +53,7 @@ const runAppServer: TRunAppServer = ({
     });
 
     server.get(`${stateAddressPart}*`, async (request, response) => {
-        const stateData = getServerAppState(request);
+        const stateData = await getServerAppState(request);
         return response.send(stateData);
     });
 
