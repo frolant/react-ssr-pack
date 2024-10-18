@@ -12,8 +12,8 @@ export interface TRenderServerAppRequestOptions {
 }
 
 export interface IStateCacheService {
-    setItem: (id: string, data: string) => Promise<void>;
-    getItem: (id: string) => Promise<string>;
+    setItem: (key: string, data: string) => Promise<void>;
+    getItem: (key: string) => Promise<string>;
 }
 
 type TRenderServerAppOptions<OptionsExtension = Record<string, unknown>> = TRenderAppConfig<OptionsExtension> & {
