@@ -8,7 +8,7 @@ export const createStateCacheService = (): IStateCacheService => {
     const cache = createCacheData();
     return {
         getItem: async (id) => cache.get(id),
-        createItem: async (id, data) => {
+        setItem: async (id, data) => {
             cache.set(id, getProcessedData(data));
 
             if (cache.size > clearCacheItemsLengthLimit) {
