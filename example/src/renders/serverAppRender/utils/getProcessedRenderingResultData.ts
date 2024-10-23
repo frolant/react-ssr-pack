@@ -19,7 +19,7 @@ interface IGetProcessedRenderingResultData {
     renderingResult: INodeAppRenderResultData;
     headDataContext: IHeadDataSwitchContainerContext;
     routerContext: IRouterContext;
-    initialState: TStore;
+    store: TStore;
 }
 
 type TGetProcessedRenderingResultData = (data: IGetProcessedRenderingResultData) => IRenderServerAppResult;
@@ -44,7 +44,7 @@ export const getProcessedRenderingResultData: TGetProcessedRenderingResultData =
     renderingResult,
     headDataContext,
     routerContext,
-    initialState
+    store
 }) => {
     const { content, ...data } = renderingResult;
     const { helmet: { title, meta, link, script } } = headDataContext;
@@ -53,7 +53,7 @@ export const getProcessedRenderingResultData: TGetProcessedRenderingResultData =
     return {
         ...data,
         head: `${title.toString()}${meta.toString()}${link.toString()}${script.toString()}`,
-        state: initialState.getState(),
+        state: store ? store.getState() : null,
         content: content.replace(/<!-- -->|<!--\$-->|<!--\/\$-->/g, ''),
         responseLocation: location,
         responseCode: code

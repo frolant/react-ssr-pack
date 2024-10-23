@@ -53,7 +53,9 @@ const runAppServer: TRunAppServer = ({
     });
 
     server.get(`${stateAddressPart}*`, async (request, response) => {
-        const stateData = await getServerAppState(request);
+        const { originalUrl = '' } = request;
+        const url = originalUrl.replace(stateAddressPart, '');
+        const stateData = await getServerAppState(url);
         return response.send(stateData);
     });
 

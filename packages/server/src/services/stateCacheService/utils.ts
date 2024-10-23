@@ -1,6 +1,11 @@
 import zlib from 'zlib';
 
-export type TCacheData = Map<string, string>;
+export interface IStateCacheServiceDataItem {
+    time: number;
+    data: string;
+}
+
+export type TCacheData = Map<string, IStateCacheServiceDataItem>;
 
 export const createCacheData = (): TCacheData => new Map();
 
@@ -8,8 +13,8 @@ export const getProcessedData = (data: any): string => {
     return JSON.stringify(data).replace(/</g, '\\u003c');
 };
 
-export const getKey = (key: string): string => {
-    return decodeURIComponent(key).split('/').filter(Boolean).join(':');
+export const getDataItemId = (key: string): string => {
+    return decodeURIComponent(key).split('/').filter(Boolean).join(':') || ':';
 };
 
 export const getCompressedData = (data: string): string => {

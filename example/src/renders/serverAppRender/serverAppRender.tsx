@@ -18,14 +18,16 @@ import type { IRenderOptionsExtension } from '../types';
 
 const serverAppRender: TServerAppRender<IRenderOptionsExtension> = async ({
     app: AppComponent,
+    preloadedState,
     request,
     reducers,
     sagas
 }) => {
     const routerContext: IRouterContext = {};
     const headDataContext = {} as IHeadDataSwitchContainerContext;
+    const initialStore = preloadedState ? JSON.parse(preloadedState) : null;
 
-    let { store, saga } = initStore(reducers, sagas, {} as any, onSagaAction);
+    let { store, saga } = initStore(reducers, sagas, initialStore, onSagaAction);
 
     const onRenderedHandler = async (): Promise<void> => {
         await waitSaga();
@@ -57,7 +59,7 @@ const serverAppRender: TServerAppRender<IRenderOptionsExtension> = async ({
     ), onRenderedHandler);
 
     return getProcessedRenderingResultData({
-        initialState: store,
+        store: !preloadedState ? store : null,
         renderingResult,
         headDataContext,
         routerContext

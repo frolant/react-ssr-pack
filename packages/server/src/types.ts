@@ -18,6 +18,7 @@ export interface IStateCacheService {
 
 type TRenderServerAppOptions<OptionsExtension = Record<string, unknown>> = TRenderAppConfig<OptionsExtension> & {
     request: TRenderServerAppRequestOptions;
+    preloadedState: string;
 };
 
 export interface IRenderServerAppResult {

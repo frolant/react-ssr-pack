@@ -3,16 +3,16 @@ import { legacy_createStore as create, combineReducers, compose } from 'redux';
 
 import { isRunInBrowser, window } from 'utils/window';
 
-import type { TCreateRootSaga, TCreateStore, TStore } from './types';
+import type { TCreateRootSaga, TCreateStore } from './types';
 
-export const createStore: TCreateStore = (reducers, middlewares, initialStore = {} as TStore) => {
+export const createStore: TCreateStore = (reducers, middlewares, initialStore) => {
     const isDevelopment = !__IS_PRODUCTION_MODE__;
     const extensions = isRunInBrowser ? window.__REDUX_DEVTOOLS_EXTENSION__ : () => {};
 
     const combinedReducer = combineReducers(reducers);
     const composedMiddlewares = compose(middlewares, isDevelopment && isRunInBrowser && extensions ? extensions() : (f: any) => f);
 
-    return create(combinedReducer, initialStore, composedMiddlewares);
+    return create(combinedReducer, initialStore || {}, composedMiddlewares);
 };
 
 export const createRootSaga: TCreateRootSaga = (sagas) => function* rootSaga() {

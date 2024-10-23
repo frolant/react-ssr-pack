@@ -55,17 +55,17 @@ export const getServerAppPageContent: TGetServerAppPageContent = async (stateCac
         } = await serverAppRender({
             app,
             request: getRequestData(request),
+            preloadedState: await stateCacheService.getItem(originalUrl),
             ...restAppConfig
         });
 
         const isSuccessResponseCode = responseCode === defaultResponseCode;
-        const preloadedStateCode = encodeURIComponent(originalUrl);
 
-        contentResult = isSuccessResponseCode ? getServerAppHTML(preloadedStateCode, head, content) : htmlTemplate;
+        contentResult = isSuccessResponseCode ? getServerAppHTML(originalUrl, head, content) : htmlTemplate;
         responseLocationResult = responseLocation;
         responseCodeResult = responseCode;
 
-        isSuccessResponseCode && await stateCacheService.setItem(preloadedStateCode, state);
+        isSuccessResponseCode && state && await stateCacheService.setItem(originalUrl, state);
 
         logExecution({
             ...defaultLogData,

@@ -1,12 +1,8 @@
 import { getStateScriptContent } from './utils';
 
-import { stateAddressPart } from '../../constants';
-
 import type { IStateCacheService } from '../../types';
 
-export const getServerAppState = async (stateCacheService: IStateCacheService, { originalUrl = '' }): Promise<string> => {
-    const id = originalUrl.replace(stateAddressPart, '');
-    const state = await stateCacheService.getItem(id);
-
+export const getServerAppState = async (stateCacheService: IStateCacheService, url: string): Promise<string> => {
+    const state = await stateCacheService.getItem(url);
     return getStateScriptContent(state);
 };
