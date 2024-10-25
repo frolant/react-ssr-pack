@@ -29,7 +29,7 @@ const template = {
 };
 
 export const getServerAppHTML: TGetServerAppHTML = (url = '', head = '', content = '') => {
-    const headData = `${head}\r\n<script defer src="${stateAddressPart}${url}"></script>`;
+    const headData = `${head}\r\n<script defer src="${stateAddressPart}${encodeURIComponent(url)}"></script>`;
     return `${template.top}${headData}${template.center}${container.start}${content}${container.end}${template.bottom}`;
 };
 
