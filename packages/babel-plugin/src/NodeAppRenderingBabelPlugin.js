@@ -4,6 +4,7 @@ const path = require('path');
 const isDevelopmentMode = process.env.NODE_ENV === 'development';
 
 const DEFAULT_EFFECT_NAME = 'useEffect';
+const SSR_RENDERS_COUNT_VARIABLE = 'SSR_RENDERS_COUNT';
 const DEFAULT_SSR_RENDERS_COUNT = 1;
 
 const getTarget = (caller) => caller && caller.target;
@@ -23,26 +24,30 @@ const NodeAppRenderingBabelPlugin = (api) => {
         visitor: {
             CallExpression({ node }, { opts, file }) {
                 const { scope, code, opts: { filename, cwd }} = file;
+                let defaultScopeSSRRendersCount = DEFAULT_SSR_RENDERS_COUNT;
+
+                if (scope.globals[SSR_RENDERS_COUNT_VARIABLE]) {
+                    const position = scope.globals[SSR_RENDERS_COUNT_VARIABLE].end;
+                    const localCountData = code.slice(position, position + 10).match(/[0-9]+/);
+                    defaultScopeSSRRendersCount = localCountData ? localCountData[0] : defaultScopeSSRRendersCount;
+                }
 
                 getEffects(opts).forEach((effect) => {
                     if (node.callee.name === effect) {
-                        let ssrRendersCount = DEFAULT_SSR_RENDERS_COUNT;
+                        let ssrRendersCount = defaultScopeSSRRendersCount;
                         const { arguments = [], loc = {} } = node;
-
-                        if (scope.globals.SSR_RENDERS_COUNT) {
-                            const position = scope.globals.SSR_RENDERS_COUNT.end;
-                            const localCountData = code.slice(position, position + 10).match(/[0-9]+/);
-                            ssrRendersCount = localCountData ? localCountData[0] : ssrRendersCount;
-                        }
+                        const filePath = path.relative(cwd, filename);
+                        const effectId = md5(`${filePath}${loc.start.index}`);
 
                         if (arguments[0]) {
                             const { start, end } = arguments[0].body || {};
-                            const localCountData = code.slice(start, end).match(/[0-9]+/);
-                            ssrRendersCount = localCountData ? localCountData[0] : ssrRendersCount;
-                        }
+                            const data = code.slice(start, end).split(SSR_RENDERS_COUNT_VARIABLE);
 
-                        const filePath = path.relative(cwd, filename);
-                        const effectId = md5(`${filePath}${loc.start.index}`);
+                            if (data.length > 1) {
+                                const localCountData = data[1].slice(0, 10).match(/[0-9]+/);
+                                ssrRendersCount = localCountData ? localCountData[0] : ssrRendersCount;
+                            }
+                        }
 
                         arguments.push(
                             StringLiteral(effectId),
