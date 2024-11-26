@@ -12,7 +12,33 @@ const getTarget = (caller) => caller && caller.target;
 const getEffects = (options) => {
     const isEffectsInOptions = options && (typeof options.effect === 'string' || Array.isArray(options.effect));
     const effectName = isEffectsInOptions ? options.effect : DEFAULT_EFFECT_NAME;
+
     return Array.isArray(effectName) ? effectName : [effectName];
+};
+
+const findRendersCount = (text = '') => {
+    const match = text.match(/\D*=\D*(\d*)\D*/);
+    const isFound = match && match.length > 1;
+    const findingResult = isFound ? Number(match[1]) : null;
+    const isInteger = (findingResult ^ 0) === findingResult;
+
+    return isFound && isInteger ? findingResult : DEFAULT_SSR_RENDERS_COUNT;
+};
+
+const getRendersCount = (code = '', arguments = []) => {
+    let result = DEFAULT_SSR_RENDERS_COUNT;
+
+    if (arguments[0]) {
+        const { start, end } = arguments[0].body || {};
+        const rendersCountData = code.slice(start, end).split(SSR_RENDERS_COUNT_VARIABLE);
+
+        if (rendersCountData.length > 1) {
+            const rendersCountCodePart = rendersCountData[1].slice(0, 10);
+            result = findRendersCount(rendersCountCodePart);
+        }
+    }
+
+    return result;
 };
 
 const NodeAppRenderingBabelPlugin = (api) => {
@@ -23,35 +49,18 @@ const NodeAppRenderingBabelPlugin = (api) => {
         name: 'NodeAppRenderingBabelPlugin',
         visitor: {
             CallExpression({ node }, { opts, file }) {
-                const { scope, code, opts: { filename, cwd }} = file;
-                let defaultScopeSSRRendersCount = DEFAULT_SSR_RENDERS_COUNT;
-
-                if (scope.globals[SSR_RENDERS_COUNT_VARIABLE]) {
-                    const position = scope.globals[SSR_RENDERS_COUNT_VARIABLE].end;
-                    const localCountData = code.slice(position, position + 10).match(/[0-9]+/);
-                    defaultScopeSSRRendersCount = localCountData ? localCountData[0] : defaultScopeSSRRendersCount;
-                }
+                const { code, opts: { filename, cwd }} = file;
 
                 getEffects(opts).forEach((effect) => {
                     if (node.callee.name === effect) {
-                        let ssrRendersCount = defaultScopeSSRRendersCount;
                         const { arguments = [], loc = {} } = node;
                         const filePath = path.relative(cwd, filename);
                         const effectId = md5(`${filePath}${loc.start.index}`);
-
-                        if (arguments[0]) {
-                            const { start, end } = arguments[0].body || {};
-                            const data = code.slice(start, end).split(SSR_RENDERS_COUNT_VARIABLE);
-
-                            if (data.length > 1) {
-                                const localCountData = data[1].slice(0, 10).match(/[0-9]+/);
-                                ssrRendersCount = localCountData ? localCountData[0] : ssrRendersCount;
-                            }
-                        }
+                        const rendersCount = getRendersCount(code, arguments);
 
                         arguments.push(
                             StringLiteral(effectId),
-                            StringLiteral(ssrRendersCount.toString()),
+                            StringLiteral(rendersCount.toString()),
                             isDevelopmentMode ? StringLiteral(`${filePath}:0`) : NullLiteral(null) // ${node.loc.start.line}
                         );
                     }
