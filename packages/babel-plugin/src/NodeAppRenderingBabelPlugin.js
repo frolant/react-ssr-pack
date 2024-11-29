@@ -3,17 +3,29 @@ const path = require('path');
 
 const isDevelopmentMode = process.env.NODE_ENV === 'development';
 
-const DEFAULT_EFFECT_NAME = 'useEffect';
 const SSR_RENDERS_COUNT_VARIABLE = 'SSR_RENDERS_COUNT';
 const DEFAULT_SSR_RENDERS_COUNT = 1;
 
 const getTarget = (caller) => caller && caller.target;
 
-const getEffects = (options) => {
-    const isEffectsInOptions = options && (typeof options.effect === 'string' || Array.isArray(options.effect));
-    const effectName = isEffectsInOptions ? options.effect : DEFAULT_EFFECT_NAME;
-
+const getEffectItems = (options) => {
+    const isEffectInOptions = options && (typeof options.useEffect === 'string' || Array.isArray(options.useEffect));
+    const effectName = isEffectInOptions ? options.useEffect : 'useEffect';
     return Array.isArray(effectName) ? effectName : [effectName];
+};
+
+const getStateItems = (options) => {
+    const isStateInOptions = options && (typeof options.useState === 'string' || Array.isArray(options.useState));
+    const effectName = isStateInOptions ? options.useState : 'useState';
+    return Array.isArray(effectName) ? effectName : [effectName];
+};
+
+const getIdentificationData = (cwd, filename, location = {}) => {
+    const filePath = path.relative(cwd, filename);
+    return [
+        md5(`${filePath}${location.index}`),
+        filePath
+    ];
 };
 
 const findRendersCount = (text = '') => {
@@ -51,11 +63,10 @@ const NodeAppRenderingBabelPlugin = (api) => {
             CallExpression({ node }, { opts, file }) {
                 const { code, opts: { filename, cwd }} = file;
 
-                getEffects(opts).forEach((effect) => {
+                getEffectItems(opts).forEach((effect) => {
                     if (node.callee.name === effect) {
                         const { arguments = [], loc = {} } = node;
-                        const filePath = path.relative(cwd, filename);
-                        const effectId = md5(`${filePath}${loc.start.index}`);
+                        const [ effectId, filePath ] = getIdentificationData(cwd, filename, loc);
                         const rendersCount = getRendersCount(code, arguments);
 
                         arguments.push(
@@ -63,6 +74,15 @@ const NodeAppRenderingBabelPlugin = (api) => {
                             StringLiteral(rendersCount.toString()),
                             isDevelopmentMode ? StringLiteral(`${filePath}:0`) : NullLiteral(null) // ${node.loc.start.line}
                         );
+                    }
+                });
+
+                getStateItems(opts).forEach((state) => {
+                    if (node.callee.name === state) {
+                        const { arguments = [], loc = {} } = node;
+                        const [ stateId ] = getIdentificationData(cwd, filename, loc);
+
+                        arguments.unshift(StringLiteral(stateId));
                     }
                 });
             }

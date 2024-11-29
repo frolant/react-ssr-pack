@@ -2,6 +2,7 @@
 import { renderToPipeableStream } from 'react-dom/server';
 
 import { getWaitingEffectsDataItemsCount, getEffectsFilePathsData, resetEffectsStatuses, resetEffectsData } from '../effectsDataService';
+import { resetStateData } from '../stateDataService';
 
 import { getStringFromPipeableStream } from './utils';
 
@@ -39,6 +40,7 @@ export const nodeAppRender: TNodeAppRender = async (application, onRendered, max
         } else {
             const effectsFilePaths = getEffectsFilePathsData();
             resetEffectsData();
+            resetStateData();
             return {
                 maxIterationsCount,
                 executedIterationsCount,

@@ -1,7 +1,9 @@
 // @ts-nocheck
 import React from 'react';
 
-import { nodeUseEffect, getNotIdentifiedEffectData } from '@react-ssr-pack/tools';
+import { nodeUseEffect, nodeUseState, getNotIdentifiedEffectData } from '@react-ssr-pack/tools';
+
+import type { TNodeStateData } from '@react-ssr-pack/tools';
 
 type TUseEffect = (callback: () => void) => void;
 
@@ -34,7 +36,6 @@ export const {
     useMemo,
     useReducer,
     useRef,
-    useState,
     useSyncExternalStore,
     useTransition,
     version
@@ -46,5 +47,9 @@ export const useEffect: TUseEffect = (callback, ...args) => {
 };
 
 export const useLayoutEffect: TUseEffect = () => {};
+
+export const useState = (id: string, value: any): TNodeStateData => {
+    return nodeUseState(id, value);
+};
 
 export default React;

@@ -1,5 +1,5 @@
 # IDE
-.idea/*
+.idea
 .tm_properties
 .vscode
 
