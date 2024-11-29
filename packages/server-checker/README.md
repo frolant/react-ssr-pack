@@ -9,5 +9,5 @@ Server availability check handler for webpack dev-server configuration.
 ## Installation
 
 ```shell
-npm install --save @rshb/server-checker
+npm install --save @react-ssr-pack/server-checker
 ```

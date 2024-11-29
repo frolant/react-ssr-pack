@@ -9,5 +9,5 @@ Full description text.
 ## Installation
 
 ```shell
-npm install --save @rshb/${packageName}
+npm install --save @react-ssr-pack/${packageName}
 ```

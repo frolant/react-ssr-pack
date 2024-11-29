@@ -12,16 +12,15 @@
         "last 2 versions"
     ],
     "scripts": {
-        "init": "npm install --silent --no-audit --no-fund --no-save && node ./tools/initialize-local-config.js",
-        "build": "lerna run build --stream",
-        "start": "cd ./example && npm run app:hot",
-        "watch": "node ./tools/start-configured-watch.js",
-        "watch:to:lib": "lerna run watch:to:lib --parallel --stream",
-        "watch:to:app": "lerna run watch:to:app --parallel --stream",
-        "publish": "npm run init && npm run build && npm run stylelint && npm run eslint && lerna publish --no-private",
-        "generate:package": "node ./tools/generate-package.js package-name",
-        "stylelint": "stylelint ./{packages/**/src,example/src}/**/*.{css,scss} --max-warnings 0",
-        "eslint": "eslint ./packages --max-warnings 0"
+        "cli": "cli",
+        "lerna": "lerna",
+        "init": "cli init",
+        "build": "cli build all",
+        "start": "cli start",
+        "watch": "cli watch lib",
+        "publish": "cli publish",
+        "test": "cli test all",
+        "add": "cli add"
     },
     "dependencies": {
         "@web-dev-tools/cli": "1.0.11",
