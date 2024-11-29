@@ -24,6 +24,7 @@
         "eslint": "eslint ./packages --max-warnings 0"
     },
     "dependencies": {
+        "@web-dev-tools/cli": "1.0.11",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-redux": "8.0.5"
@@ -50,10 +51,10 @@
         "eslint-plugin-react": "7.32.2",
         "eslint-plugin-react-hooks": "4.6.0",
         "eslint-webpack-plugin": "3.2.0",
-        "lerna": "7.0.2",
+        "lerna": "8.1.9",
         "ts-loader": "9.4.3",
         "typescript": "5.0.4",
-        "webpack": "5.86.0",
+        "webpack": "5.96.1",
         "webpack-cli": "5.1.4",
         "webpack-node-externals": "3.0.0"
     },
