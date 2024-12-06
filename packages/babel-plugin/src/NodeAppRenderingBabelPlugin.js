@@ -6,19 +6,16 @@ const isDevelopmentMode = process.env.NODE_ENV === 'development';
 const SSR_RENDERS_COUNT_VARIABLE = 'SSR_RENDERS_COUNT';
 const DEFAULT_SSR_RENDERS_COUNT = 1;
 
-const getTarget = (caller) => caller && caller.target;
+const getCallerTarget = (caller) => caller && caller.target;
 
-const getEffectItems = (options) => {
-    const isEffectInOptions = options && (typeof options.useEffect === 'string' || Array.isArray(options.useEffect));
-    const effectName = isEffectInOptions ? options.useEffect : 'useEffect';
-    return Array.isArray(effectName) ? effectName : [effectName];
+const createGetTargetItemsHandler = (identifier) => (options) => {
+    const isInOptions = options && (typeof options[identifier] === 'string' || Array.isArray(options[identifier]));
+    const targetData = isInOptions ? options[identifier] : identifier;
+    return Array.isArray(targetData) ? targetData : [targetData];
 };
 
-const getStateItems = (options) => {
-    const isStateInOptions = options && (typeof options.useState === 'string' || Array.isArray(options.useState));
-    const effectName = isStateInOptions ? options.useState : 'useState';
-    return Array.isArray(effectName) ? effectName : [effectName];
-};
+const getEffectItems = createGetTargetItemsHandler('useEffect');;
+const getStateItems = createGetTargetItemsHandler('useState');
 
 const getIdentificationData = (cwd, filename, location = {}) => {
     const filePath = path.relative(cwd, filename);
@@ -55,7 +52,7 @@ const getRendersCount = (code = '', arguments = []) => {
 
 const NodeAppRenderingBabelPlugin = (api) => {
     const { StringLiteral, NullLiteral } = api.types;
-    api.caller(getTarget);
+    api.caller(getCallerTarget);
 
     return {
         name: 'NodeAppRenderingBabelPlugin',
@@ -80,9 +77,12 @@ const NodeAppRenderingBabelPlugin = (api) => {
                 getStateItems(opts).forEach((state) => {
                     if (node.callee.name === state) {
                         const { arguments = [], loc = {} } = node;
-                        const [ stateId ] = getIdentificationData(cwd, filename, loc);
+                        const [ stateId, filePath ] = getIdentificationData(cwd, filename, loc);
 
-                        arguments.unshift(StringLiteral(stateId));
+                        arguments.push(
+                            StringLiteral(stateId),
+                            isDevelopmentMode ? StringLiteral(`${filePath}:0`) : NullLiteral(null) // ${node.loc.start.line}
+                        );
                     }
                 });
             }

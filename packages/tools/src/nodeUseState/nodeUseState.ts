@@ -5,9 +5,9 @@ export type TNodeStateData = [
     setState: (value: any) => void
 ];
 
-export const nodeUseState = (id: string, value: any): TNodeStateData => {
+export const nodeUseState = (defaultState: any, id: string): TNodeStateData => {
     if (!checkStateIdExistence(id)) {
-        addStateDataItem(id, value);
+        addStateDataItem(id, defaultState);
     }
 
     const stateDataItem = getStateDataItem(id);

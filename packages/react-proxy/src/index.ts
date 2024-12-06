@@ -48,8 +48,9 @@ export const useEffect: TUseEffect = (callback, ...args) => {
 
 export const useLayoutEffect: TUseEffect = () => {};
 
-export const useState = (id: string, value: any): TNodeStateData => {
-    return nodeUseState(id, value);
+export const useState = (...args): TNodeStateData => {
+    const data = args.length < 3 ? [ undefined, ...args ] : args;
+    return nodeUseState(...data);
 };
 
 export default React;

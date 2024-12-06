@@ -19,7 +19,7 @@
         "start": "cli start",
         "watch": "cli watch lib",
         "publish": "cli publish",
-        "test": "cli test all",
+        "test": "cli test",
         "add": "cli add"
     },
     "dependencies": {

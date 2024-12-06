@@ -53,7 +53,7 @@ export const getEffectsFilePathsData = (): string[] => {
     return getEffectsDataItems().map((item) => item.getFilePath());
 };
 
-export const resetEffectsStatuses = (): void => {
+export const processEffectsStatusesAfterRender = (): void => {
     resetNotIdentifiedEffectsData();
     getEffectsDataItems().forEach((item) => {
         if (item.getStatus() === EffectStatus.executed) {

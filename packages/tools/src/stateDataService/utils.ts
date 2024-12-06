@@ -1,3 +1,5 @@
+import { setStateUpdateStatusToTrue } from './stateUpdateStatusService';
+
 export interface IStateDataItem {
     getValue: () => any;
     setValue: (value: any) => void;
@@ -17,6 +19,7 @@ export const createStateDataItem = (stateId: string, stateValue: any): IStateDat
         getValue: () => stateData.value,
         setValue: (value) => {
             stateData.value = value;
+            setStateUpdateStatusToTrue();
         }
     };
 };
