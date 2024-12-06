@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/tools",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "Common tools for React SSR application based on React v18 and @react-ssr-pack",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
