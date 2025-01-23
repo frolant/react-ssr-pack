@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React from 'react';
+import React, { useState as originalUseState } from 'react';
 
 import { nodeUseEffect, nodeUseState, getNotIdentifiedEffectData } from '@react-ssr-pack/tools';
 
@@ -49,8 +49,10 @@ export const useEffect: TUseEffect = (callback, ...args) => {
 export const useLayoutEffect: TUseEffect = () => {};
 
 export const useState = (...args): TNodeStateData => {
-    const data = args.length < 3 ? [ undefined, ...args ] : args;
-    return nodeUseState(...data);
+    const isNeedProxy = args.length > 1;
+    const stateHandler = isNeedProxy ? nodeUseState : originalUseState;
+    const data = isNeedProxy && args.length < 3 ? [ undefined, ...args ] : args;
+    return stateHandler(...data);
 };
 
 export default React;
