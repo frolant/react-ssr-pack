@@ -14,13 +14,18 @@ const createGetTargetItemsHandler = (identifier) => (options) => {
     return Array.isArray(targetData) ? targetData : [targetData];
 };
 
-const getEffectItems = createGetTargetItemsHandler('useEffect');;
+const getEffectItems = createGetTargetItemsHandler('useEffect');
 const getStateItems = createGetTargetItemsHandler('useState');
+
+let spareIndexCounter = 0;
 
 const getIdentificationData = (cwd, filename, location = {}) => {
     const filePath = path.relative(cwd, filename);
+    const { start = {} } = location;
+    const index = start.index || spareIndexCounter++;
+
     return [
-        md5(`${filePath}${location.index}`),
+        md5(`${filePath}${index}`),
         filePath
     ];
 };
@@ -69,7 +74,7 @@ const NodeAppRenderingBabelPlugin = (api) => {
                         arguments.push(
                             StringLiteral(effectId),
                             StringLiteral(rendersCount.toString()),
-                            isDevelopmentMode ? StringLiteral(`${filePath}:0`) : NullLiteral(null) // ${node.loc.start.line}
+                            isDevelopmentMode ? StringLiteral(`${filePath}:0`) : NullLiteral(null)
                         );
                     }
                 });
@@ -81,7 +86,7 @@ const NodeAppRenderingBabelPlugin = (api) => {
 
                         arguments.push(
                             StringLiteral(stateId),
-                            isDevelopmentMode ? StringLiteral(`${filePath}:0`) : NullLiteral(null) // ${node.loc.start.line}
+                            isDevelopmentMode ? StringLiteral(`${filePath}:0`) : NullLiteral(null)
                         );
                     }
                 });
