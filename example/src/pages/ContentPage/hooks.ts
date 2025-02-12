@@ -11,7 +11,7 @@ import type { IPage } from 'store';
 export const usePageData = (): IPage => {
     const dispatch = useDispatch();
     const { pathname } = useLocation();
-    const prevPageId = useRef<string>();
+    const prevPageId = useRef<string>('');
 
     const pagesData = useAppSelector((state) => state.content.pages);
 

@@ -24,17 +24,17 @@
     },
     "dependencies": {
         "@web-dev-tools/cli": "1.0.11",
-        "react": "18.2.0",
-        "react-dom": "18.2.0",
-        "react-redux": "8.0.5"
+        "react": "19.0.0",
+        "react-dom": "19.0.0",
+        "react-redux": "9.2.0"
     },
     "devDependencies": {
         "@babel/core": "7.22.5",
         "@babel/plugin-proposal-export-default-from": "7.22.5",
         "@babel/preset-env": "7.22.5",
-        "@babel/preset-react": "7.22.5",
-        "@types/react": "18.2.12",
-        "@types/react-dom": "18.2.5",
+        "@babel/preset-react": "7.26.3",
+        "@types/react": "19.0.8",
+        "@types/react-dom": "19.0.3",
         "@typescript-eslint/eslint-plugin": "5.59.11",
         "@typescript-eslint/parser": "5.59.11",
         "babel-loader": "9.1.2",
