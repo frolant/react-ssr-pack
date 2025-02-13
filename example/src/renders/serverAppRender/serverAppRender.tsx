@@ -1,15 +1,15 @@
-import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { END } from 'redux-saga';
 import { nodeAppRender } from '@react-ssr-pack/tools';
+import { PortalsCollection } from '@react-ssr-pack/portal';
 
 import AppInitializationContainer from 'components/AppInitializationContainer';
 import { HeadDataSwitchContainerProvider } from 'components/HeadDataSwitchContainer';
 
-import { initStore } from 'services/storeService';
+import { initStore } from 'utils/initStore';
 
-import { getProcessedRenderingResultData, onSagaAction, waitSaga } from './utils';
+import { getProcessedRenderingResultData, getSagaHandlers } from './utils';
 
 import type { StaticRouterContext as IRouterContext } from 'react-router';
 import type { TServerAppRender } from '@react-ssr-pack/server';
@@ -26,6 +26,7 @@ const serverAppRender: TServerAppRender<IRenderOptionsExtension> = async ({
     const routerContext: IRouterContext = {};
     const headDataContext = {} as IHeadDataSwitchContainerContext;
     const initialStore = preloadedState ? JSON.parse(preloadedState) : null;
+    const { onSagaAction, waitSaga } = getSagaHandlers();
 
     let { store, saga } = initStore(reducers, sagas, initialStore, onSagaAction);
 
@@ -52,6 +53,7 @@ const serverAppRender: TServerAppRender<IRenderOptionsExtension> = async ({
                 <Provider store={store}>
                     <AppInitializationContainer>
                         <AppComponent />
+                        <PortalsCollection />
                     </AppInitializationContainer>
                 </Provider>
             </StaticRouter>

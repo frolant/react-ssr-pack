@@ -1,12 +1,12 @@
-import React from 'react';
-
 import HeadDataSwitchContainer from 'components/HeadDataSwitchContainer';
 
 import { pageData } from './constants';
 
 import styles from './NotFoundPage.scss';
 
-const NotFoundPage: React.FC = () => (
+import type { FC } from 'react';
+
+const NotFoundPage: FC = () => (
     <HeadDataSwitchContainer
         title={pageData.title}
         description={pageData.description}

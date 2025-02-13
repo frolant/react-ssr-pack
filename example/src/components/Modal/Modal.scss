@@ -1,0 +1,29 @@
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    overflow: auto;
+    min-width: 375px;
+
+    &__mask {
+        position: fixed;
+        inset: 0;
+        height: 100vh;
+        background: #ffffff;
+        opacity: 0.7;
+    }
+
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100%;
+    }
+
+    &__content {
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

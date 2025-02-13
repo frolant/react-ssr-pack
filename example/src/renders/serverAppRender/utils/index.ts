@@ -1,2 +1,2 @@
 export { getProcessedRenderingResultData } from './getProcessedRenderingResultData';
-export { onSagaAction, waitSaga } from './sagaHandlers';
+export { getSagaHandlers } from './sagaHandlers';

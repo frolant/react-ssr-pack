@@ -1,9 +1,9 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 
 import styles from './Footer.scss';
 
+import type { FC } from 'react';
 import type { IMenuItem } from 'store';
 
 interface IProps {
@@ -11,7 +11,7 @@ interface IProps {
     menu: IMenuItem[];
 }
 
-const Footer: React.FC<IProps> = ({ className, menu }) => (
+const Footer: FC<IProps> = ({ className, menu }) => (
     <div className={classnames(className, styles.footer)}>
         <div className={styles.footer__container}>
             <div className={styles.footer__links}>

@@ -1,7 +1,8 @@
-import React, { RefObject } from 'react';
 import { createPortal } from 'react-dom';
 
 import { isRunInBrowser, getPortalOptions, updatePortalsData } from './utils';
+
+import type { FC, RefObject } from 'react';
 
 export interface IPortalProps {
     children: any;
@@ -9,7 +10,7 @@ export interface IPortalProps {
     containerRef?: RefObject<HTMLElement>;
 }
 
-const Portal: React.FC<IPortalProps> = (props) => {
+const Portal: FC<IPortalProps> = (props) => {
     return isRunInBrowser ? createPortal(...getPortalOptions(props)) : updatePortalsData(props);
 };
 

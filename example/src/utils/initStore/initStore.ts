@@ -5,11 +5,7 @@ import { getOnSagaActionMiddleware } from './middlewares';
 
 import { createStore, createRootSaga } from './utils';
 
-import storeDataProvider from './storeDataProvider';
-
 import type { TInitStore } from './types';
-
-export const getStore = storeDataProvider.get;
 
 export const initStore: TInitStore = (reducers, sagas, initialStore, onSagaAction) => {
     const sagaMiddleware = createSagaMiddleware({
@@ -27,8 +23,6 @@ export const initStore: TInitStore = (reducers, sagas, initialStore, onSagaActio
 
     const store = createStore(reducers, middlewares, initialStore);
     const rootSaga = createRootSaga(sagas);
-
-    storeDataProvider.set(store);
 
     return {
         saga: sagaMiddleware.run(rootSaga),

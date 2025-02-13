@@ -1,11 +1,12 @@
-import React from 'react';
 import parseHTML from 'html-react-parser';
 
+import type { FC } from 'react';
+
 interface IProps {
-    contentRef?: HTMLElement;
+    contentRef: HTMLElement;
 }
 
-const FallbackContent: React.FC<IProps> = ({ contentRef = {} }) => {
+const FallbackContent: FC<IProps> = ({ contentRef = {} as HTMLElement }) => {
     const { innerHTML } = contentRef;
     return (
         <>

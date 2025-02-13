@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 
 import HeadDataSwitchContainer from 'components/HeadDataSwitchContainer';
+import Modal from 'components/Modal';
 
 import styles from './MainPage.scss';
 
+import { ROUTES } from 'constants/routes';
 import { pageData } from './constants';
 
-const MainPage: React.FC = () => {
+import type { FC } from 'react';
+
+const MainPage: FC = () => {
+    const history = useHistory();
+    const { pathname } = useLocation();
     const [ linkContent, setLinkContent ] = useState<string>();
 
     // For useState data storage test on SSR after re-rendering
     useEffect(() => {
         !linkContent && setLinkContent('See on github.com');
     }, [linkContent]);
+
+    const onCloseModal = useCallback(() => history.push(ROUTES.MAIN), [history]);
 
     return (
         <HeadDataSwitchContainer
@@ -38,11 +47,28 @@ const MainPage: React.FC = () => {
                     {linkContent}
                 </a>
 
-                <img
-                    className={styles.mainPage__image}
-                    src="/favicon-32x32.png"
-                    alt="React SSR Pack"
-                />
+                <NavLink to={ROUTES.LOGO}>
+                    <img
+                        className={styles.mainPage__image}
+                        src="/favicon-32x32.png"
+                        alt="React SSR Pack"
+                    />
+                </NavLink>
+
+                {pathname === ROUTES.LOGO && (
+                    <Modal onClose={onCloseModal}>
+                        <NavLink
+                            className={styles.mainPage__largeImageLink}
+                            to={ROUTES.MAIN}
+                        >
+                            <img
+                                className={styles.mainPage__largeImage}
+                                src="/android-chrome-512x512.png"
+                                alt="React SSR Pack"
+                            />
+                        </NavLink>
+                    </Modal>
+                )}
             </div>
         </HeadDataSwitchContainer>
     );

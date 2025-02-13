@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { isRunInNode } from 'utils/window';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { loadMenuRequest } from 'store/actions';
 
@@ -10,19 +11,19 @@ type TUseAppState = () => {
 };
 
 export const useAppState: TUseAppState = () => {
+    const [isNotFirstRender, setIsNotFirstRender] = useState(isRunInNode);
     const dispatch = useDispatch();
 
-    const isLoadingProcess = useAppSelector((state) => state.request.process);
     const isMenuDataLoaded = !!useAppSelector((state) => state.content.menu);
+    const isLoadingProcess = useAppSelector((state) => state.request.process);
 
     useEffect(() => {
-        if (!isMenuDataLoaded) {
-            dispatch(loadMenuRequest());
-        }
-    }, [dispatch, isMenuDataLoaded]);
+        !isMenuDataLoaded && dispatch(loadMenuRequest());
+        !isNotFirstRender && setIsNotFirstRender(true);
+    }, [dispatch, isMenuDataLoaded, isNotFirstRender]);
 
     return {
-        isAppReady: isMenuDataLoaded,
+        isAppReady: isNotFirstRender && isMenuDataLoaded,
         isLoading: isLoadingProcess
     };
 };

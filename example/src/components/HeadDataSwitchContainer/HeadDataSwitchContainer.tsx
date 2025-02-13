@@ -1,7 +1,6 @@
-import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 
 export interface IHeadDataSwitchContainerProps {
     title?: string;
@@ -10,7 +9,7 @@ export interface IHeadDataSwitchContainerProps {
     children?: ReactNode;
 }
 
-const HeadDataSwitchContainer: React.FC<IHeadDataSwitchContainerProps> = ({
+const HeadDataSwitchContainer: FC<IHeadDataSwitchContainerProps> = ({
     title,
     description,
     keywords,

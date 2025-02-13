@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 
@@ -6,12 +5,14 @@ import type { IMenuItem } from 'store';
 
 import styles from './Header.scss';
 
+import type { FC } from 'react';
+
 interface IProps {
     className: string;
     menu: IMenuItem[];
 }
 
-const Header: React.FC<IProps> = ({ className, menu }) => (
+const Header: FC<IProps> = ({ className, menu }) => (
     <div className={classnames(className, styles.header)}>
         <div className={styles.header__container}>
             <NavLink

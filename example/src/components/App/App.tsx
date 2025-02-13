@@ -1,4 +1,4 @@
-import React from 'react';
+import { lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Header from 'components/Header';
@@ -12,10 +12,12 @@ import { ROUTES } from 'constants/routes';
 
 import styles from './App.scss';
 
-const ContentPage = React.lazy(() => import('pages/ContentPage'));
-const NotFoundPage = React.lazy(() => import('pages/NotFoundPage'));
+import type { FC } from 'react';
 
-const App: React.FC = () => {
+const ContentPage = lazy(() => import('pages/ContentPage'));
+const NotFoundPage = lazy(() => import('pages/NotFoundPage'));
+
+const App: FC = () => {
     const menuData = useAppSelector((state) => state.content.menu);
 
     return (
@@ -28,7 +30,10 @@ const App: React.FC = () => {
             <div className={styles.app__content}>
                 <Switch>
                     <Route
-                        path={ROUTES.MAIN}
+                        path={[
+                            ROUTES.MAIN,
+                            ROUTES.LOGO
+                        ]}
                         component={MainPage}
                         exact={true}
                     />

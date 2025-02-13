@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@babel/runtime": "7.22.5",
+        "@react-ssr-pack/portal": "*",
         "@react-ssr-pack/server": "*",
         "@react-ssr-pack/server-checker": "*",
         "@react-ssr-pack/tools": "*",

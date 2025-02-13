@@ -1,8 +1,8 @@
-import React from 'react';
-
 import portalsDataProvider from '../../services/portalsDataProvider';
 
-const PortalsCollection: React.FC = () => {
+import type { FC } from 'react';
+
+const PortalsCollection: FC = () => {
     const portalsData = portalsDataProvider.get();
     portalsDataProvider.clear();
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import classnames from 'classnames';
 
 import HeadDataSwitchContainer from 'components/HeadDataSwitchContainer';
@@ -9,7 +8,9 @@ import { EContentType } from 'store';
 
 import styles from './ContentPage.scss';
 
-const ContentPage: React.FC = () => {
+import type { FC } from 'react';
+
+const ContentPage: FC = () => {
     const pageData = usePageData();
 
     return (

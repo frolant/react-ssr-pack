@@ -10,4 +10,12 @@
     &__image {
         margin-top: 20px;
     }
+
+    &__largeImage {
+        max-width: 80%;
+    }
+
+    &__largeImageLink {
+        text-align: center;
+    }
 }

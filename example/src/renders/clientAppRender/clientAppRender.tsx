@@ -1,16 +1,15 @@
-import React from 'react';
-import { /* hydrateRoot, */ createRoot } from 'react-dom/client';
+import { hydrateRoot, createRoot } from 'react-dom/client';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { createBrowserHistory } from 'history';
 
 import { HeadDataSwitchContainerProvider } from 'components/HeadDataSwitchContainer';
 
 import { document } from 'utils/window';
-import history from 'utils/history';
 
 import AppInitializationContainer from 'components/AppInitializationContainer';
 
-import { initStore } from 'services/storeService';
+import { initStore } from 'utils/initStore';
 
 import 'normalize.css/normalize.css';
 
@@ -22,9 +21,7 @@ import type { IRenderOptionsExtension } from '../types';
 const rootElement = document.getElementById('root');
 
 const runApp = (App: ReactNode): Root | void => {
-    // Temporary disable hydrate process
-    // return rootElement.innerHTML ? hydrateRoot(rootElement, App) : createRoot(rootElement).render(App);
-    return createRoot(rootElement).render(App);
+    return rootElement.innerHTML ? hydrateRoot(rootElement, App) : createRoot(rootElement).render(App);
 };
 
 const clientAppRender: TClientAppRender<IRenderOptionsExtension> = ({
@@ -32,6 +29,7 @@ const clientAppRender: TClientAppRender<IRenderOptionsExtension> = ({
     reducers,
     sagas
 }) => {
+    const history = createBrowserHistory();
     const initialStore = window.__PRELOADED_STATE__;
     const { store } = initStore(reducers, sagas, initialStore);
     delete window.__PRELOADED_STATE__;

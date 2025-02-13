@@ -1,5 +1,4 @@
-import React, { Suspense } from 'react';
-
+import { Suspense } from 'react';
 import { useAppState } from './hooks';
 
 import type { ReactNode } from 'react';
@@ -7,12 +6,14 @@ import type { ReactNode } from 'react';
 import FallbackContent from './components/FallbackContent';
 import Loading from './components/Loading';
 
+import type { FC } from 'react';
+
 interface IProps {
     contentRef?: HTMLElement;
     children: ReactNode;
 }
 
-const AppInitializationContainer: React.FC<IProps> = ({
+const AppInitializationContainer: FC<IProps> = ({
     contentRef,
     children: App
 }) => {
