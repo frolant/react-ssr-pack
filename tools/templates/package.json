@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/${packageName}",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Package ${packageName} - Part of toolkit for creating a server side rendering application in React",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",

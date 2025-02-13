@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/portal",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "description": "Portal - Component for server side rendering React-portals",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
