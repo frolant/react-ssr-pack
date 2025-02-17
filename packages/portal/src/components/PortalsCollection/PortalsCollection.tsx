@@ -1,10 +1,10 @@
-import portalsDataProvider from '../../services/portalsDataProvider';
+import { usePortalsContext } from '../../PortalsContext';
 
 import type { FC } from 'react';
 
 const PortalsCollection: FC = () => {
-    const portalsData = portalsDataProvider.get();
-    portalsDataProvider.clear();
+    const { getPortalsData } = usePortalsContext();
+    const portalsData = getPortalsData();
 
     return portalsData.length ? (
         <>

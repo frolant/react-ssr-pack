@@ -1,6 +1,8 @@
 import { createPortal } from 'react-dom';
 
-import { isRunInBrowser, getPortalOptions, updatePortalsData } from './utils';
+import { isRunInBrowser, getPortalOptions } from './utils';
+
+import { usePortalsContext } from './PortalsContext';
 
 import type { FC, RefObject } from 'react';
 
@@ -10,8 +12,16 @@ export interface IPortalProps {
     containerRef?: RefObject<HTMLElement>;
 }
 
-const Portal: FC<IPortalProps> = (props) => {
-    return isRunInBrowser ? createPortal(...getPortalOptions(props)) : updatePortalsData(props);
+type TPortal = FC<IPortalProps>;
+
+const BrowserPortal: TPortal = (props) => {
+    return createPortal(...getPortalOptions(props));
 };
 
-export default Portal;
+const NodePortal: TPortal = (props) => {
+    const { addPortalData } = usePortalsContext();
+    addPortalData(props.children);
+    return null;
+};
+
+export default isRunInBrowser ? BrowserPortal : NodePortal;

@@ -5,7 +5,12 @@ const babelLoader = [{
     options: {
         "presets": [
             "@babel/preset-env",
-            "@babel/preset-react"
+            [
+                "@babel/preset-react",
+                {
+                    "runtime": "automatic"
+                }
+            ]
         ],
         "plugins": [
             "@babel/plugin-proposal-export-default-from"
@@ -16,6 +21,7 @@ const babelLoader = [{
                     [
                         "@babel/preset-react",
                         {
+                            "runtime": "automatic",
                             "development": true
                         }
                     ]

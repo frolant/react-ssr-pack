@@ -1,8 +1,8 @@
 import { StaticRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider as ReduxStoreProvider } from 'react-redux';
 import { END } from 'redux-saga';
 import { nodeAppRender } from '@react-ssr-pack/tools';
-import { PortalsCollection } from '@react-ssr-pack/portal';
+import { PortalsContextProvider, PortalsCollection } from '@react-ssr-pack/portal';
 
 import AppInitializationContainer from 'components/AppInitializationContainer';
 import { HeadDataSwitchContainerProvider } from 'components/HeadDataSwitchContainer';
@@ -46,17 +46,19 @@ const serverAppRender: TServerAppRender<IRenderOptionsExtension> = async ({
 
     const renderingResult = await nodeAppRender(() => (
         <HeadDataSwitchContainerProvider context={headDataContext}>
-            <StaticRouter
-                location={request.url}
-                context={routerContext}
-            >
-                <Provider store={store}>
-                    <AppInitializationContainer>
-                        <AppComponent />
-                        <PortalsCollection />
-                    </AppInitializationContainer>
-                </Provider>
-            </StaticRouter>
+            <PortalsContextProvider value={[]}>
+                <StaticRouter
+                    location={request.url}
+                    context={routerContext}
+                >
+                    <ReduxStoreProvider store={store}>
+                        <AppInitializationContainer>
+                            <AppComponent />
+                            <PortalsCollection />
+                        </AppInitializationContainer>
+                    </ReduxStoreProvider>
+                </StaticRouter>
+            </PortalsContextProvider>
         </HeadDataSwitchContainerProvider>
     ), onRenderedHandler);
 
