@@ -32,7 +32,7 @@ const getRedirectCodeByRouter: TGetRedirectCodeByRouter = (url) => {
     return url === ROUTES.NOT_FOUND ? httpCodes.NotFound : httpCodes.TemporaryRedirect;
 };
 
-export const getProcessedLocationData: TGetProcessedCodeData = ({ action, url }) => {
+const getProcessedLocationData: TGetProcessedCodeData = ({ action, url }) => {
     const isRouterRedirect = action === REDIRECT_ACTION_NAME;
     return {
         code: isRouterRedirect ? getRedirectCodeByRouter(url) : defaultHttpCode,

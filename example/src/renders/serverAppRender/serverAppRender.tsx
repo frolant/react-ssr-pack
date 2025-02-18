@@ -3,13 +3,14 @@ import { Provider as ReduxStoreProvider } from 'react-redux';
 import { END } from 'redux-saga';
 import { nodeAppRender } from '@react-ssr-pack/tools';
 import { PortalsContextProvider, PortalsCollection } from '@react-ssr-pack/portal';
+import { getReduxSagaHandlers } from '@react-ssr-pack/redux-saga-handlers';
 
 import AppInitializationContainer from 'components/AppInitializationContainer';
 import { HeadDataSwitchContainerProvider } from 'components/HeadDataSwitchContainer';
 
 import { initStore } from 'utils/initStore';
 
-import { getProcessedRenderingResultData, getSagaHandlers } from './utils';
+import { getProcessedRenderingResultData } from './utils';
 
 import type { StaticRouterContext as IRouterContext } from 'react-router';
 import type { TServerAppRender } from '@react-ssr-pack/server';
@@ -26,7 +27,7 @@ const serverAppRender: TServerAppRender<IRenderOptionsExtension> = async ({
     const routerContext: IRouterContext = {};
     const headDataContext = {} as IHeadDataSwitchContainerContext;
     const initialStore = preloadedState ? JSON.parse(preloadedState) : null;
-    const { onSagaAction, waitSaga } = getSagaHandlers();
+    const { onSagaAction, waitSaga } = getReduxSagaHandlers();
 
     let { store, saga } = initStore(reducers, sagas, initialStore, onSagaAction);
 

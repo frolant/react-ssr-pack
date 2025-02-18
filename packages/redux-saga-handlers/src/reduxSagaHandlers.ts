@@ -1,27 +1,18 @@
 import { EventEmitter } from 'events';
 import { effectTypes } from 'redux-saga/effects';
 
-import debounce from './debounce';
+import { debounce, logForceExitError } from './utils';
 
-type TGetSagaHandlers = () => {
+import { waitingSagaEndEventName, forceExitTimeoutMs } from './constants';
+
+type TGetReduxSagaHandlers = () => {
     onSagaAction: ({ type, payload }: any) => void;
     waitSaga: () => Promise<void>;
 };
 
 const { RACE, TAKE, PUT } = effectTypes;
-const waitingSagaEndEventName = 'SAGA_END';
-const forceExitTimeoutMs = 20 * 1000;
-const forceExitErrorText = [
-    '\u001b[1m\u001b[31mWARNING:\x1b[0m Force exit from waiting sagas execution by timeout.',
-    'Probably not all sagas finished on server side.',
-    'Not executed TAKE or RACE action names pairs data:'
-];
 
-const logForceExitError = (queue: string[][]): void => {
-    console.error(forceExitErrorText.join('\n'), '\n', queue);
-};
-
-export const getSagaHandlers: TGetSagaHandlers = () => {
+export const getReduxSagaHandlers: TGetReduxSagaHandlers = () => {
     let waitingActionsQueue: string[][] = [];
     let isWaitingSagaStarted = false;
 
