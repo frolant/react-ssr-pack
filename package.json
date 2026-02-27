@@ -23,7 +23,7 @@
         "add": "cli add"
     },
     "dependencies": {
-        "@web-dev-tools/cli": "1.0.11",
+        "@web-dev-tools/cli": "1.0.12",
         "react": "19.0.0",
         "react-dom": "19.0.0",
         "react-redux": "9.2.0"
