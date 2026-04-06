@@ -1,10 +1,6 @@
-// @ts-ignore - REMOVE AFTER UPDATE TYPES FOR REACT 18
-import { renderToPipeableStream } from 'react-dom/server';
-
 import { getWaitingEffectsDataItemsCount, getEffectsFilePathsData, processEffectsStatusesAfterRender, resetEffectsData } from '../effectsDataService';
 import { resetStateData, resetStateUpdateStatus, getStateUpdateStatus } from '../stateDataService';
-
-import { getStringFromPipeableStream } from './utils';
+import { getStringFromComponent } from './utils';
 
 export interface INodeAppRenderResultData {
     maxIterationsCount: number;
@@ -25,8 +21,7 @@ export const nodeAppRender: TNodeAppRender = async (application, onRendered, max
     const render = async (): TNodeAppRenderResult => {
         const App = await application();
 
-        const stream = await renderToPipeableStream(App);
-        const content = await getStringFromPipeableStream(stream);
+        const content = await getStringFromComponent(App);
 
         await onRendered();
 
