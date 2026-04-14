@@ -50,7 +50,7 @@
         "eslint-plugin-react": "7.32.2",
         "eslint-plugin-react-hooks": "4.6.0",
         "eslint-webpack-plugin": "3.2.0",
-        "lerna": "8.1.9",
+        "lerna": "9.0.0",
         "ts-loader": "9.4.3",
         "typescript": "5.0.4",
         "webpack": "5.96.1",
