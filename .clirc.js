@@ -68,6 +68,32 @@ module.exports = ({
             command: 'add',
             question: `Insert package name:`,
             execute: (packageName) => `node ./tools/generate-package.js ${packageName}`
+        },
+        {
+            command: 'versions',
+            question: 'Choose command:',
+            answers: () => {
+                const options = [
+                    '--exact --yes --no-push --ignore-changes --ignore-scripts',
+                    '--no-commit-hooks --no-git-tag-version --force-publish'
+                ].join(' ');
+                return [
+                    {
+                        command: 'patch',
+                        execute: () => `lerna version patch ${options}`
+                    },
+                    {
+                        command: 'minor',
+                        execute: () => {
+                            return `lerna version minor ${options}`;
+                        }
+                    },
+                    {
+                        command: 'major',
+                        execute: () => `lerna version major ${options}`
+                    }
+                ];
+            }
         }
     ])
 });
