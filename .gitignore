@@ -5,6 +5,7 @@
 
 # Config
 /local.config.json
+.npmrc
 
 # Temp
 lib
