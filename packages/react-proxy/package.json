@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/react-proxy",
-    "version": "1.2.30",
+    "version": "1.2.31",
     "description": "Library for proxying React and redefine some of his functions on SSR application based on React v18 and @react-ssr-pack",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
@@ -25,7 +25,7 @@
         "watch:to:app": "node ../../run watch-to-app react-proxy"
     },
     "dependencies": {
-        "@react-ssr-pack/tools": "1.2.30"
+        "@react-ssr-pack/tools": "1.2.31"
     },
     "peerDependencies": {
         "react": "^19.1.2"
