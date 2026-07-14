@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/server-checker",
-    "version": "1.2.9",
+    "version": "1.2.10",
     "description": "SSR-server availability check handler for webpack dev-server configuration",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
@@ -21,5 +21,5 @@
         "watch:to:lib": "echo Watch mode not supported && exit 0",
         "watch:to:app": "echo Watch mode not supported && exit 0"
     },
-    "gitHead": "4dd4dec4485a19301bfbb1d1b7a879707df4cc3b"
+    "gitHead": "114755db6e8f299e6b511b048df1c5f01d153566"
 }
