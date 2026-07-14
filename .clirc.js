@@ -62,7 +62,7 @@ module.exports = ({
         },
         {
             command: 'publish',
-            execute: () => 'cli init && cli build all && cli test && lerna publish patch --exact --yes --access public'
+            execute: () => 'cli init && cli build all && cli test && lerna publish patch --exact --yes'
         },
         {
             command: 'add',
