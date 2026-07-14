@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/redux-saga-handlers",
-    "version": "1.2.3",
+    "version": "1.2.29",
     "description": "Handlers for Redux-Saga TAKE and RACE effects working in SSR",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
@@ -23,5 +23,6 @@
     },
     "dependencies": {
         "redux-saga": "1.3.0"
-    }
+    },
+    "gitHead": "2cacd76ec33fb369b3cb9c6a643a8b91de55f3bc"
 }
