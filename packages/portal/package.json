@@ -16,6 +16,9 @@
     "browserslist": [
         "last 2 versions"
     ],
+    "files": [
+        "lib/"
+    ],
     "scripts": {
         "build": "node ../../run build portal",
         "watch:to:lib": "node ../../run watch-to-lib portal",

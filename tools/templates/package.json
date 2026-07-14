@@ -13,6 +13,9 @@
     "publishConfig": {
         "access": "public"
     },
+    "files": [
+        "lib/"
+    ],
     "browserslist": [
         "last 2 versions"
     ],

@@ -12,6 +12,9 @@
     "publishConfig": {
         "access": "public"
     },
+    "files": [
+        "lib/"
+    ],
     "scripts": {
         "build": "node ../../tools/update-library-from-source babel-plugin",
         "watch:to:lib": "echo Watch mode not supported && exit 0",
