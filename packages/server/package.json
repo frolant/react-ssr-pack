@@ -1,6 +1,6 @@
 {
     "name": "@react-ssr-pack/server",
-    "version": "1.2.7",
+    "version": "1.2.8",
     "description": "Server for listening a React SSR application based on React v18 and @react-ssr-pack",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
@@ -29,5 +29,6 @@
     },
     "peerDependencies": {
         "react": "^19.0.0"
-    }
+    },
+    "gitHead": "4dd4dec4485a19301bfbb1d1b7a879707df4cc3b"
 }
